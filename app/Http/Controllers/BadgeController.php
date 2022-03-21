@@ -2,61 +2,76 @@
 
 namespace App\Http\Controllers;
 
-use App\Badge;
-use App\Http\Services\BadgeService;
-use App\Http\Middleware\Admin;
-use App\Http\Requests\BadgeRequest;
+use App\Http\Resources\BadgeClassificationResourceCollection;
+use App\Http\Resources\BadgeResource;
+use App\Http\Resources\BadgeResourceCollection;
+use App\Http\Resources\BadgeTypeResourceCollection;
+use App\Services\BadgeClassificationService;
+use App\Services\BadgeService;
+use App\Services\BadgeTypeService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class BadgeController extends Controller
 {
-    private $service;
 
-    public function __construct()
-    {
+    /* @var BadgeService */
+    protected $badgeService;
+    /* @var BadgeTypeService */
+    protected $badgeTypeService;
+    /* @var BadgeClassificationService */
+    protected $badgeClassificationService;
+
+    public function __construct(
+        BadgeService               $badgeService,
+        BadgeTypeService           $badgeTypeService,
+        BadgeClassificationService $badgeClassificationService
+    ) {
+        $this->badgeService               = $badgeService;
+        $this->badgeTypeService           = $badgeTypeService;
+        $this->badgeClassificationService = $badgeClassificationService;
         $this->middleware('auth');
-        $this->middleware(Admin::class, ['except' => ['ranking', 'rankingCSV']]);
-
-        $this->service = new BadgeService();
     }
 
-    public function index()
+    public function get(Request $request)
     {
-        $badges = Badge::all();
-
-        return view('badge.index', ['badges' => $badges->all()]);
+        $data = new BadgeResource($this->badgeService->get($request->id));
+        return Response::json($data, HttpResponse::HTTP_OK);
     }
 
-    public function create()
+    public function list(Request $request)
     {
-        return view('badge.create');
-    }
-
-    public function store(BadgeRequest $request)
-    {
-        Badge::create($request->all());
-
-        return redirect('badges');
-    }
-
-    public function ranking(): View
-    {
-        $ranking           = $this->service->obterRankingComNiveisDeBadges();
-        $nomeUsuarioLogado = Auth::user()->name;
-
-        return view('badge.ranking', ['registrosDoRanking' => $ranking, 'nomeUsuarioLogado' => $nomeUsuarioLogado]);
-    }
-
-    public function rankingCSV(): BinaryFileResponse
-    {
-        $arquivo = $this->service->geraRankingCSV();
-        $headers = [
-            'Content-Type' => 'text/csv',
+        $filters = [
+            'page' => $request->get('page')
         ];
+        $data = new BadgeResourceCollection($this->badgeService->list($filters, 'value'));
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
 
-        return Response::download($arquivo, 'ranking-begaming.csv', $headers);
+    public function types()
+    {
+        $data = new BadgeTypeResourceCollection($this->badgeTypeService->list(['active' => true], 'description'));
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
+
+    public function classifications()
+    {
+        $data = new BadgeClassificationResourceCollection($this->badgeClassificationService->list(['active' => true],
+            'description'));
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
+
+    public function create(Request $request)
+    {
+        $data  = new BadgeResource($this->badgeService->create($request->all()));
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
+
+    public function update(Request $request)
+    {
+        $badge = $this->badgeService->get($request->id);
+        $data  = new BadgeResource($this->badgeService->update($badge, $request->all()));
+        return Response::json($data, HttpResponse::HTTP_OK);
     }
 }

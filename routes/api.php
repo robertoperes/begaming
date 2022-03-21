@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,34 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('user')->middleware('auth:api')->group(function () {
+    Route::get('/', 'UserController@list');
+    Route::get('/me', 'UserController@me');
+    Route::post('/{id}', 'UserController@update');
+    Route::get('/{id}', 'UserController@get');
+});
+
+Route::prefix('badge')->middleware('auth:api')->group(function () {
+    Route::get('/', 'BadgeController@list');
+    Route::post('/', 'BadgeController@create');
+    Route::post('/{id}', 'BadgeController@update');
+
+    Route::get('/types', 'BadgeController@types');
+    Route::get('/classifications', 'BadgeController@classifications');
+
+    Route::get('/{id}', 'BadgeController@get');
+});
+
+Route::prefix('point')->middleware('auth:api')->group(function () {
+    Route::get('/', 'UserPointBadgeController@list');
+    Route::post('/', 'UserPointBadgeController@create');
+    Route::get('/status', 'UserPointBadgeController@listStatus');
+    Route::get('/{id}', 'UserPointBadgeController@get');
+    Route::post('/{id}', 'UserPointBadgeController@update');
+});
+
+Route::prefix('dashboard')->middleware('auth:api')->group(function () {
+    Route::get('/user-point-badge', 'DashboardController@listUserPointBadge');
+    Route::get('/user-badge', 'DashboardController@listUserBadge');
+    Route::get('/ranking', 'DashboardController@ranking');
 });

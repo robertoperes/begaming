@@ -1,6 +1,16 @@
-@extends('layouts.app')
-
-@section('content')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>BeGaming - Login</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -74,4 +84,5 @@
         </div>
     </div>
 </div>
-@endsection
+</body>
+</html>

@@ -2,44 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Badge;
-use App\Http\Middleware\Admin;
-use App\Http\Requests\BadgeRequest;
-use App\User;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserResourceCollection;
+use App\Services\UserService;
+use CodeToad\Strava\Strava;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    /* @var UserService */
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
-        $this->middleware('auth');
-        $this->middleware(Admin::class);
+        $this->userService = $userService;
     }
 
-    public function index(){
-        $users = User::all();
-
-        return view('user.index', ['users' => $users->all()]);
+    public function me(Request $request)
+    {
+        $user = $this->userService->get(auth()->user()->id);
+        $data = new UserResource($user);
+        return Response::json($data, HttpResponse::HTTP_OK);
     }
 
-    public function create(){
-        return view('user.create');
+    public function get()
+    {
+        $user = $this->userService->get(auth()->user()->id);
+        $data = new UserResource($user);
+        return Response::json($data, HttpResponse::HTTP_OK);
     }
 
-    public function store(BadgeRequest $request){
-
-        $user = new User();
-        $user->fill($request->all());
-        $user->password = Hash::make('teste1212');
-
-        $user->save();
-
-        return redirect('users');
+    public function list(Request $request)
+    {
+        $filters = [
+            'page' => $request->get('page')
+        ];
+        $data = new UserResourceCollection($this->userService->list($filters,'name'));
+        return Response::json($data, HttpResponse::HTTP_OK);
     }
+
 }

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+let productionSourceMaps = false;
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,31 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.webpackConfig({
+    devtool: 'eval-source-map',
+    resolve: {
+        extensions: ['.js', '.vue'],
+        alias: {
+            '@': __dirname + '/resources'
+        }
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules(?!\/foundation-sites)|bower_components/,
+                use: {
+                    loader: 'babel-loader'
+                }
+            }
+        ]
+    }
+});
+
+mix.js('resources/js/app.js', 'public/js').sourceMaps(productionSourceMaps, 'source-map')
+    .extract(['vue']);
+mix.sass('resources/sass/app.scss', 'public/css');
+
+if (mix.inProduction()) {
+    mix.version();
+}

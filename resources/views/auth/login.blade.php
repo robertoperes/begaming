@@ -1,54 +1,65 @@
-@extends('layouts.app_login')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>BeGaming - Login</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
 
-@section('content')
-    <div class="row w-100 mx-0">
-        <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                <div class="brand-logo">
-                    <img src="../../images/logo.svg" alt="logo">
-                </div>
-                <h6 class="font-weight-light">{{ __('Login') }}</h6>
-                <form class="pt-3" method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="form-group">
-                        <input type="email" name="email" class="form-control form-control-lg" id="email" placeholder="{{ __('E-Mail') }}" value="{{ old('email') }}">
 
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control form-control-lg" id="password" autocomplete="current-password" placeholder="{{ __('Senha') }}">
-
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                        @enderror
-                    </div>
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
-                            {{ __('Login') }}
-                        </button>
-                    </div>
-                    <div class="my-2 d-flex justify-content-between align-items-center">
-                        <div class="form-check">
-                            <label class="form-check-label text-muted">
-                                <input type="checkbox" class="form-check-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                Manter Conectado
-                            </label>
-                        </div>
-
-                        @if (Route::has('password.request'))
-                            <a class="auth-link text-black" href="{{ route('password.request') }}">
-                                {{ __('Esqueceu a senha?') }}
-                            </a>
-                        @endif
-                    </div>
-                </form>
+<div class="app">
+    <div class="div-center">
+        <div class="content">
+            <div class="text-center">
+                <img src="/images/logo.svg" alt="Logo BeGaming" width="200"/>
+            </div>
+            <hr>
+            <div class="text-center">
+                <div>Para acessar é necessário utilizar a sua conta Before.</div>
+                <a href="{{route('login-google')}}" class="btn btn-light">
+                    <img src="/images/google.svg" width="50" alt="Logo Google"/>Logar usando sua conta Google</a>
             </div>
         </div>
     </div>
-@endsection
+</div>
+</body>
+</html>
+
+<style>
+    .app {
+        background: #333333;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+
+    .div-center {
+        width: 400px;
+        height: 400px;
+        background-color: #fff;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
+        overflow: auto;
+        padding: 1em 2em;
+        border-bottom: 2px solid #ccc;
+        display: table;
+    }
+
+    div.content {
+        display: table-cell;
+        vertical-align: middle;
+    }
+</style>
