@@ -26,7 +26,7 @@
       </p>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
-          <caption>* Anual (Zera na passagem de nível)</caption>
+          <caption>* Anual (Zera na passagem de nível exceto Cultura e Tempo de Empresa)</caption>
         <thead>
         <tr>
           <th>
@@ -43,10 +43,10 @@
         <tr>
           <td><img src="/images/badges/type/bem-estar-classic.png" width="10"> Bem estar</td>
           <td class="text-center">Pontos</td>
-          <td class="text-center">100</td>
-          <td class="text-center">160</td>
-          <td class="text-center">220</td>
+          <td class="text-center">180</td>
           <td class="text-center">280</td>
+          <td class="text-center">380</td>
+          <td class="text-center">480</td>
         </tr>
         <tr>
           <td><img src="/images/badges/type/cursos-palestras-classic.png" width="10"> Evolução</td>
@@ -125,6 +125,11 @@ export default {
               description: 'Doar Sangue/Plaquetas',
               point: 20,
               observation: 'Por comprovação enviada para o e-mail do RH'
+            },
+            {
+              description: 'Atividade física',
+              point: 1,
+              observation: 'Por dia de atividade física comprovada no Strava'
             },
           ]
         },
