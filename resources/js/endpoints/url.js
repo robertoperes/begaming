@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8000/api';
+const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://begaming.before.com.br/api' : 'http://localhost:8000/api';
 
 const urls = {
     USER_DATA: `${BASE_URL}/user/me`,

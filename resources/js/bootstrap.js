@@ -36,7 +36,7 @@ try {
         'Authorization': 'Bearer ' + userToken.content,
     };
 
-    window.axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'https://begaming.before.com.br:8000/api' : 'http://localhost:8000/api';
+    window.axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'https://begaming.before.com.br/api' : 'http://localhost:8000/api';
     window.axios.defaults.withCredentials = true;
 
 } catch (e) {

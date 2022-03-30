@@ -33,10 +33,11 @@ mix.webpackConfig({
     }
 });
 
-mix.js('resources/js/app.js', 'public/js').sourceMaps(productionSourceMaps, 'source-map')
-    .extract(['vue']);
-mix.sass('resources/sass/app.scss', 'public/css');
-
 if (mix.inProduction()) {
+    mix.js('resources/js/app.js', 'public/js').minify('public/js/app.js');
+    mix.sass('resources/sass/app.scss', 'public/css').minify('public/css/app.css');
     mix.version();
+} else {
+    mix.js('resources/js/app.js', 'public/js');
+    mix.sass('resources/sass/app.scss', 'public/css');
 }
