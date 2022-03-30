@@ -74,7 +74,7 @@ export default {
       return this.user.name || '';
     },
     firstName() {
-      return this.name.split(' ').slice(0, -1).join(' ');
+      return this.name.split(' ')[0];
     },
     athleteId() {
       if (!this.isConnectedStrava) {

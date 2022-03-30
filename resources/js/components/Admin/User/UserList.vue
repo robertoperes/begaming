@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading v-show="isLoading"/>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -25,17 +26,24 @@
 import UserListItem from "./UserListItem";
 import {mapActions, mapGetters} from "vuex";
 import Paginator from "../../Paginator";
+import Loading from "../../Loading";
 
 export default {
-  components: {Paginator, UserListItem},
+  data() {
+    return {isLoading: false};
+  },
+  components: {Loading, Paginator, UserListItem},
   computed: {
     ...mapGetters('user', ['users', 'meta']),
   },
   methods: {
     ...mapActions('user', ['getList']),
     async fetch(page) {
+      this.isLoading = true;
       await this.getList({
         page: page || 1
+      }).then(() => {
+        this.isLoading = false;
       });
     }
   },
@@ -45,8 +53,8 @@ export default {
       default: null
     }
   },
-  beforeMount() {
-    this.fetch();
+  async beforeMount() {
+    await this.fetch();
   }
 }
 </script>

@@ -2,11 +2,12 @@ import Dashboard from '../components/Dashboard/Dashboard.vue';
 import Profile from '../components/Profile.vue';
 import Badges from '../components/Admin/Badge/Badge.vue';
 import Point from '../components/Admin/Point/Point.vue';
-import Users from '../components/Admin/User/User.vue';
+import User from '../components/Admin/User/User.vue';
 import BadgeRoles from "../components/BadgeRoles";
 
 import BadgeForm from "../components/Admin/Badge/BadgeForm";
 import PointBadgeForm from "../components/Admin/Point/PointBadgeForm";
+import UserForm from '../components/Admin/User/UserForm.vue';
 
 
 
@@ -49,6 +50,8 @@ export default [
     {path: '/admin/badges/list', component: Badges, name: 'badges'},
     {path: '/admin/badges/:id(\\d+)', component: BadgeForm, name: 'badgesForm', props: true},
 
-    {path: '/admin/users', component: Users, name: 'users'},
+    {path: '/admin/users', component: UserForm, name: 'userFormNew'},
+    {path: '/admin/users/list', component: User, name: 'users'},
+    {path: '/admin/users/:id(\\d+)', component: UserForm, name: 'userForm', props: true},
 
 ]

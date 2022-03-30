@@ -58,13 +58,19 @@ class LoginController extends Controller
 
         try {
             $user = $this->userService->findUserBy(['email' => $googleUser->email]);
+
+            if (empty($user->api_token)) {
+                $user->api_token = Str::random(60);
+            }
+
             $this->userService->update($user, [
                 'id'            => $user->id,
                 'active'        => true,
                 'email'         => $googleUser->email,
                 'google_id'     => $googleUser->id,
                 'google_avatar' => $avatarUrl,
-                'updated_at'    => Carbon::now('UTC')
+                'updated_at'    => Carbon::now('UTC'),
+                'api_token'     => $user->api_token
             ]);
         } catch (\Exception $exception) {
             $user = $this->userService->create([

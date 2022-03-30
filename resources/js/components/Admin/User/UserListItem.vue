@@ -6,18 +6,20 @@
     </td>
     <td class="text-center align-middle"><i :class="this.iconClass"></i></td>
     <td class="text-center align-middle">
-      <img :src="item.google_avatar" class="rounded-circle" height="10" width="10" alt="Avatar"/>
+      <img :src="item.google_avatar" class="rounded-circle" height="10" width="10" alt="Avatar" v-show="item.google_avatar"/>
     </td>
     <td class="text-left align-middle">{{ item.name }}</td>
     <td class="text-left align-middle">{{ item.email }}</td>
-    <td class="text-left align-middle">{{ item.admission_date }}</td>
+    <td class="text-left align-middle">{{ formatDate(item.admission_date) }}</td>
     <td class="text-center align-middle">
-      <button class="btn btn-sm" title="Editar" @click="edit(item.id)"><i class="icon bi-pencil-square"/></button>
+      <button class="btn btn-sm" title="Editar" @click="edit(item.id);"><i class="icon bi-pencil-square"/></button>
     </td>
   </tr>
 </template>
 
 <script>
+
+import moment from "moment";
 
 export default {
   props: {
@@ -27,8 +29,13 @@ export default {
   },
   methods: {
     edit(id) {
-      //this.$router.push({name: 'badgesForm', params: {id: id}});
-    }
+      this.$router.push({name: 'userForm', params: {id: id}});
+    },
+    formatDate(value){
+      if (value) {
+        return moment(String(value)).format('DD/MM/YYYY')
+      }
+    },
   },
   computed: {
     isConnectedStrava() {

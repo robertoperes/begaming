@@ -3,7 +3,8 @@ const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://begaming.befor
 const urls = {
     USER_DATA: `${BASE_URL}/user/me`,
     USER_LIST: `${BASE_URL}/user`,
-
+    USER_CREATE: `${BASE_URL}/user`,
+    USER_UPDATE: `${BASE_URL}/user`,
 
     POINT_LIST: `${BASE_URL}/point`,
     POINT_CREATE: `${BASE_URL}/point`,

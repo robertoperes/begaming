@@ -3,7 +3,7 @@
     <loading v-show="isLoading"/>
     <div class="card profileCard mb-3 p-3" style="max-width: 540px;">
       <div class="text-center">
-        <img :src="this.user.google_avatar" width="90" height="90" class="rounded-circle" alt="Avatar">
+        <img :src="this.user.google_avatar" width="90" height="90" class="rounded-circle" alt="Avatar" v-show="this.user.google_avatar">
       </div>
       <div class="card-body text-center">
         <h2 class="card-title">
@@ -13,7 +13,7 @@
         </h2>
         <div id="badges" class="card-text">
           <div><b>{{ this.user.email }}</b></div>
-          <div><i>Beforiano desde {{ this.user.admission_date }}</i></div>
+          <div><i>Beforiano desde {{ formatDate(this.user.admission_date) }}</i></div>
           <hr>
           <div class="text-center">
             <badge v-for="badge in this.user.badges" :key="badge.id" :item="badge" :size="60"/>
@@ -28,16 +28,24 @@
 import {mapGetters} from "vuex";
 import Badge from "../components/Badge";
 import Loading from "../components/Loading";
+import moment from "moment";
 
 export default {
   data() {
     return {isLoading: false};
   },
   components: {Loading, Badge},
+  methods: {
+    formatDate(value) {
+      if (value) {
+        return moment(String(value)).format('DD/MM/YYYY')
+      }
+    },
+  },
   computed: {
-    ...mapGetters('user', ['user', 'isAdmin','isConnectedStrava']),
+    ...mapGetters('user', ['user', 'isAdmin', 'isConnectedStrava']),
     urlStravaAthlete() {
-      if(this.isConnectedStrava){
+      if (this.isConnectedStrava) {
         return `https://www.strava.com/athletes/${this.user.strava.athlete_id}`;
       }
     }

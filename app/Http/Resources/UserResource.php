@@ -27,7 +27,7 @@ class UserResource extends JsonResource
             'google_avatar'  => $this->google_avatar,
             'admission_date' => Carbon::parse($this->admission_date,
                 'UTC')->format
-            ('d/m/Y'),
+            ('Y-m-d'),
             'strava'         => $strava,
             'badges'         => new BadgeResourceCollection($this->badges)
         ];

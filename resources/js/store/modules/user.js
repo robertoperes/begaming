@@ -46,6 +46,9 @@ export default {
         }
     },
     actions: {
+        async get({commit}, id) {
+            return api.get(id);
+        },
         async getUser({commit}) {
             return api.getUserData().then(({data}) => {
                 commit("setAuthenticated", true);
@@ -70,6 +73,12 @@ export default {
             commit("setUser", {});
             commit("setAuthenticated", false);
         },
+        async create({commit}, data) {
+            return api.create(data);
+        },
+        async update({commit}, data) {
+            return api.update(data);
+        }
     },
     namespaced: true
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Carbon\Carbon;
 
 class UserService
 {
@@ -28,20 +29,23 @@ class UserService
         return $user;
     }
 
-    public function list(array $filter = [], $order = 'id',string $orderType = 'ASC')
+    public function list(array $filters = [], $order = 'id',string $orderType = 'ASC')
     {
-//        return $this->userRepository->findAll($filter, $order, $orderType);
+        $itemsPerPage = $filters['per_page'] ?? 10;
+        $page         = $filters['page'] ?? 1;
 
-        return $this->userRepository->list()->paginateWithLimit(5,1);
+        return $this->userRepository->list()->paginateWithLimit($itemsPerPage, $page);
     }
 
     public function create(array $data): User
     {
+        $data['admission_date'] = Carbon::parse($data['admission_date'])->toDateString();
         return $this->userRepository->create($data);
     }
 
     public function update(User $user, array $data): User
     {
+        $data['admission_date'] = Carbon::parse($data['admission_date'])->toDateString();
         return $this->userRepository->update($user, $data);
     }
 

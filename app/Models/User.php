@@ -26,9 +26,10 @@ class User extends Authenticatable
         'admission_date',
         'api_token',
         'admin',
+        'google_id',
+        'google_avatar',
         'created_at',
         'updated_at',
-        'google_avatar'
     ];
 
     protected $hidden = [
