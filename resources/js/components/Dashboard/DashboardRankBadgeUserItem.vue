@@ -1,8 +1,8 @@
 <template>
-  <tr>
-    <td></td>
+  <tr :title="item.name">
+    <th scope="row" class="align-middle">{{ item.rank }}º</th>
     <td class="text-left align-middle"><span>
-      <img :src="item.google_avatar" class="rounded-circle" height="5" width="5"
+      <img :src="item.google_avatar" class="rounded-circle" height="3"
            alt="Avatar" v-show="item.google_avatar"/> {{ this.firstName }}
     </span></td>
     <td class="text-center align-middle"> {{ item.total }}</td>
@@ -14,7 +14,7 @@ export default {
     item: Object
   },
   computed: {
-    name(){
+    name() {
       return this.item.name || '';
     },
     firstName() {

@@ -14,6 +14,7 @@ class UserBadgeRepository extends RepositoryAbstract
     {
         return $this->createModel()->select(
             DB::raw('count( badge_id ) as total'),
+            DB::raw('@curRank := IFNULL(@curRank,0) + 1 AS rank'),
             'user.name',
             'user.google_avatar'
         )->join(
@@ -21,7 +22,7 @@ class UserBadgeRepository extends RepositoryAbstract
             'user.id',
             '=',
             'user_badge.user_id'
-        )->where('user.active', '=', true)->groupBy('user.id')->orderBy('total','DESC')->limit(5)->get();
+        )->where('user.active', '=', true)->groupBy('user.id')->orderBy('total', 'DESC')->limit(5)->get();
     }
 
 }

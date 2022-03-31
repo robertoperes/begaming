@@ -7,7 +7,7 @@
       </div>
       <div class="card-body">
         <div class="card-text">
-          <table class="table table-sm">
+          <table class="table table-sm table-borderless">
             <thead>
             <tr>
               <th scope="col">#</th>

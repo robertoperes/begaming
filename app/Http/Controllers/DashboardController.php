@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BadgeResourceCollection;
+use App\Http\Resources\DashboardRankingBadgeUsersResourceCollection;
 use App\Http\Resources\UserPointBadgeResourceCollection;
 use App\Services\BadgeService;
 use App\Services\UserBadgeService;
@@ -59,7 +60,7 @@ class DashboardController extends Controller
 
     public function rankingBadgeUsers()
     {
-        $data['data'] = $this->userBadgeService->rankingBadgeUsers();
+        $data = new DashboardRankingBadgeUsersResourceCollection($this->userBadgeService->rankingBadgeUsers());
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 }
