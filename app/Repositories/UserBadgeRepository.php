@@ -14,7 +14,6 @@ class UserBadgeRepository extends RepositoryAbstract
     {
         return $this->createModel()->select(
             DB::raw('count( badge_id ) as total'),
-            DB::raw('@curRank := IFNULL(@curRank,0) + 1 AS rank'),
             'user.name',
             'user.google_avatar'
         )->join(

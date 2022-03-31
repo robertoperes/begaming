@@ -16,7 +16,7 @@
             </tr>
             </thead>
             <tbody>
-            <dashboard-rank-badge-user-item v-for="user in this.badgeUsersRank" :key="user.id" :item="user"/>
+            <dashboard-rank-badge-user-item v-for="(user, index) in this.badgeUsersRank" :key="index" :index="index+1" :item="user"/>
             </tbody>
           </table>
         </div>

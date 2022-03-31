@@ -1,6 +1,6 @@
 <template>
   <tr :title="item.name">
-    <th scope="row" class="align-middle">{{ item.rank }}º</th>
+    <th scope="row" class="align-middle">{{ index }}º</th>
     <td class="text-left align-middle"><span>
       <img :src="item.google_avatar" class="rounded-circle" height="3"
            alt="Avatar" v-show="item.google_avatar"/> {{ this.firstName }}
@@ -11,7 +11,8 @@
 <script>
 export default {
   props: {
-    item: Object
+    item: Object,
+    index: Number
   },
   computed: {
     name() {
