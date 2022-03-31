@@ -51,9 +51,9 @@ class UserPointBadgeService
         return $this->userPointBadgeRepository->update($model, $data);
     }
 
-    public function findBadgeTypeDate(int $badge_type_id, string $date)
+    public function findBadgeTypeDate(int $user_id, int $badge_type_id, string $date)
     {
-        $point = $this->userPointBadgeRepository->findBadgeTypeDate($badge_type_id, $date);
+        $point = $this->userPointBadgeRepository->findBadgeTypeDate($user_id, $badge_type_id, $date);
 
         if (!($point instanceof UserPointBadge)) {
             throw new \Exception('Ponto não encontrado');
