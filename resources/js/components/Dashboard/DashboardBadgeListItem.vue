@@ -1,5 +1,5 @@
 <template>
-  <figure class="figure img-thumbnail" :title="this.item.name + ' - ' + this.item.classification.description">
+  <figure class="p-1 d-inline" :title="this.item.name + ' - ' + this.item.classification.description">
     <img :src="this.item.icon" :width="this.size"
          :alt=" this.item.name + ' - ' + this.item.classification.description "/>
   </figure>

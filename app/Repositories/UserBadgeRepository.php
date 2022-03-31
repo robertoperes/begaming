@@ -12,16 +12,21 @@ class UserBadgeRepository extends RepositoryAbstract
 
     public function rankingBadgeUsers()
     {
-        return $this->createModel()->select(
-            DB::raw('count( badge_id ) as total'),
-            'user.name',
-            'user.google_avatar'
-        )->join(
-            'user',
-            'user.id',
-            '=',
-            'user_badge.user_id'
-        )->where('user.active', '=', true)->groupBy('user.id')->orderBy('total', 'DESC')->limit(5)->get();
+        return DB::connection()->select('SELECT *
+            FROM (
+                     SELECT user.id,
+                            count(*)                   as total,
+                            MIN(user_badge.created_at) as created_at,
+                            user.name,
+                            user.google_avatar,
+                            user.active
+                     FROM user
+                              INNER JOIN user_badge ON user_badge.user_id = user.id
+                     WHERE user.active = true
+                     GROUP BY user.id
+                 ) as tb
+            ORDER BY tb.total DESC, tb.created_at ASC
+            LIMIT 10');
     }
 
 }
