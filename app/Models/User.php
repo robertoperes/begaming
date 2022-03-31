@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     public function badges()
     {
-        return $this->belongsToMany(Badge::class, 'user_badge', 'user_id', 'id');
+        return $this->belongsToMany(Badge::class, 'user_badge', 'user_id', 'badge_id');
     }
 
     public function points()
