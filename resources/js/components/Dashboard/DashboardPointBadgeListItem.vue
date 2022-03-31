@@ -4,7 +4,7 @@
       <img :src="item.type.icon" class="img-thumbnail" height="5" width="5"
            alt="Icone Tipo do Badge"/> {{ item.type.description }}
     </span></td>
-    <td class="text-center align-middle">{{ formatDate(item.created_at) }}</td>
+    <td class="text-center align-middle">{{ formatDate(item.event_date) }}</td>
     <td class="text-center align-middle"> {{ item.value }}</td>
   </tr>
 </template>

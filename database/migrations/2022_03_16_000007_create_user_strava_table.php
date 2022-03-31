@@ -23,7 +23,7 @@ class CreateUserStravaTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
+            $table->unsignedBigInteger('id')->autoIncrement();
             $table->unsignedBigInteger('user_id');
             $table->bigInteger('athlete_id')->nullable();
             $table->text('access_token');

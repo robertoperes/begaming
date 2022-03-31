@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class UserStravaActivit extends Model
 {
-    protected $primaryKey = 'id';
-    protected $table      = 'user_strava_activit';
-    public    $timestamps = true;
+    protected $primaryKey   = 'id';
+    protected $table        = 'user_strava_activit';
+    public    $timestamps   = true;
+    public    $incrementing = false;
 
     protected $fillable = [
+        'id',
         'user_strava_id',
         'active',
         'name',

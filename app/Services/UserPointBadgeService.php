@@ -34,7 +34,7 @@ class UserPointBadgeService
         $itemsPerPage = $filters['per_page'] ?? 10;
         $page         = $filters['page'] ?? 1;
 
-        return $this->userPointBadgeRepository->list()->paginateWithLimit($itemsPerPage, $page);
+        return $this->userPointBadgeRepository->list($order, $orderType)->paginateWithLimit($itemsPerPage, $page);
     }
 
     public function create(array $data)
@@ -47,5 +47,15 @@ class UserPointBadgeService
     {
         $data['event_date'] = Carbon::parse($data['event_date'])->toDateString();
         return $this->userPointBadgeRepository->update($model, $data);
+    }
+
+    public function findBadgeTypeDate(int $badge_type_id, string $date)
+    {
+        $point = $this->userPointBadgeRepository->findBadgeTypeDate($badge_type_id, $date);
+
+        if (!($point instanceof UserPointBadge)) {
+            throw new \Exception('Ponto não encontrado');
+        }
+        return $point;
     }
 }

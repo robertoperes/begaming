@@ -46,7 +46,7 @@ class DashboardController extends Controller
             'page'     => $request->get('page'),
             'per_page' => $request->get('per_page'),
         ];
-        $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'id', 'DESC'));
+        $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'event_date', 'DESC'));
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 

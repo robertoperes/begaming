@@ -37,4 +37,9 @@ class UserStravaService
     {
         return $this->userStravaRepository->update($userStrava, $data);
     }
+
+    public function getActiveUsers()
+    {
+        return $this->userStravaRepository->getActiveUsers()->get();
+    }
 }
