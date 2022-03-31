@@ -4,7 +4,7 @@
       <div>Sua conta ainda não está vinculada ao Strava, é importante que você vincule o
         <strong>BeGaming</strong> a sua conta <strong>Strava</strong>.
       </div>
-      <div>
+      <div class="p-1">
         <router-link :to="{name:'strava-app-connect'}"
                      class="btn btn-sm btn-danger">
           <i class="icon bi-strava"/> Conectar ao Strava

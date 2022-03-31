@@ -13,6 +13,7 @@ class UserStravaRepository extends RepositoryAbstract
     public function getActiveUsers(): Builder
     {
         return $this->createModel()->select(['user_strava.*'])->join('user', 'user.id', '=', 'user_strava.user_id')
+            ->where('user_strava.active', '=', true)
             ->where('user.active', '=', true);
     }
 }

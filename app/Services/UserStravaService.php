@@ -38,6 +38,11 @@ class UserStravaService
         return $this->userStravaRepository->update($userStrava, $data);
     }
 
+    public function delete(UserStrava $userStrava)
+    {
+        return $this->userStravaRepository->delete($userStrava);
+    }
+
     public function getActiveUsers()
     {
         return $this->userStravaRepository->getActiveUsers()->get();

@@ -13,6 +13,7 @@ class UserStrava extends Model
 
     protected $fillable = [
         'id',
+        'active',
         'user_id',
         'athlete_id',
         'access_token',

@@ -25,6 +25,7 @@ class CreateUserStravaTable extends Migration
             $table->engine = 'InnoDB';
             $table->unsignedBigInteger('id')->autoIncrement();
             $table->unsignedBigInteger('user_id');
+            $table->tinyInteger('active')->default('1');
             $table->bigInteger('athlete_id')->nullable();
             $table->text('access_token');
             $table->text('refresh_token');

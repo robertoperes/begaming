@@ -64,13 +64,14 @@ class LoginController extends Controller
             }
 
             $this->userService->update($user, [
-                'id'            => $user->id,
-                'active'        => true,
-                'email'         => $googleUser->email,
-                'google_id'     => $googleUser->id,
-                'google_avatar' => $avatarUrl,
-                'updated_at'    => Carbon::now('UTC'),
-                'api_token'     => $user->api_token
+                'id'             => $user->id,
+                'active'         => true,
+                'email'          => $googleUser->email,
+                'google_id'      => $googleUser->id,
+                'google_avatar'  => $avatarUrl,
+                'updated_at'     => Carbon::now('UTC'),
+                'api_token'      => $user->api_token,
+                'admission_date' => $user->admission_date
             ]);
         } catch (\Exception $exception) {
             $user = $this->userService->create([

@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function strava()
     {
-        return $this->hasOne(UserStrava::class, 'user_id', 'id');
+        return $this->hasOne(UserStrava::class, 'user_id', 'id')->where('user_strava.active', '=', true);
     }
 
 }
