@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Strava;
 
-class CollectStravaActivities extends Command
+class CollectStravaActivitiesCommand extends Command
 {
 
     const START_ACTIVITIES_EPOCH = 1646092800; // 01/03/2022 00:00:00
