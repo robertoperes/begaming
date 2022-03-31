@@ -52,9 +52,9 @@
           <td><img src="/images/badges/type/cursos-palestras-classic.png" width="10"> Evolução</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">180</td>
-          <td class="text-center">350</td>
-          <td class="text-center">520</td>
-          <td class="text-center">690</td>
+          <td class="text-center">280</td>
+          <td class="text-center">380</td>
+          <td class="text-center">480</td>
         </tr>
         <tr>
           <td><img src="/images/badges/type/tempo-empresa-classic.png" width="10"> Tempo de empresa</td>
