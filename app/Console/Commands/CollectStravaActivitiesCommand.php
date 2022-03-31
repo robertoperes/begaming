@@ -62,7 +62,8 @@ class CollectStravaActivitiesCommand extends Command
                 $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp,
                     self::START_ACTIVITIES_EPOCH);
             } catch (\Exception $exception) {
-                $this->error('Falha ao obter atividades do usuário '.$user->id.'. Erro: '.$exception->getMessage());
+                $this->info('Falha ao obter atividades do usuário '.$user->id.'. Erro: '.$exception->getMessage());
+
                 continue;
             }
 
