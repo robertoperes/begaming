@@ -29,7 +29,7 @@ class UserService
         return $user;
     }
 
-    public function list(array $filters = [], $order = 'id',string $orderType = 'ASC')
+    public function list(array $filters = [], $order = 'id', string $orderType = 'ASC')
     {
         $itemsPerPage = $filters['per_page'] ?? 10;
         $page         = $filters['page'] ?? 1;
@@ -39,13 +39,15 @@ class UserService
 
     public function create(array $data): User
     {
-        $data['admission_date'] = Carbon::parse($data['admission_date'])->toDateString();
+        $data['admission_date'] = isset($data['admission_date']) ? Carbon::parse($data['admission_date'])
+            ->toDateString() : null;
         return $this->userRepository->create($data);
     }
 
     public function update(User $user, array $data): User
     {
-        $data['admission_date'] = Carbon::parse($data['admission_date'])->toDateString();
+        $data['admission_date'] = isset($data['admission_date']) ? Carbon::parse($data['admission_date'])
+            ->toDateString() : null;
         return $this->userRepository->update($user, $data);
     }
 
