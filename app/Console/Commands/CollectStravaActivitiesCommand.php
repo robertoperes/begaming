@@ -48,7 +48,7 @@ class CollectStravaActivitiesCommand extends Command
 
         foreach ($users as $user) {
 
-            if (strtotime($now) > $user->expires_at) {
+            if (strtotime(Carbon::now()) > $user->expires_at) {
                 $refresh = Strava::refreshToken($user->refresh_token);
                 $this->userStravaService->update($user, [
                     'access_token'  => $refresh->access_token,
@@ -57,8 +57,14 @@ class CollectStravaActivitiesCommand extends Command
                 $user->access_token  = $refresh->access_token;
                 $user->refresh_token = $refresh->refresh_token;
             }
-            $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp,
-                self::START_ACTIVITIES_EPOCH);
+
+            try {
+                $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp,
+                    self::START_ACTIVITIES_EPOCH);
+            } catch (\Exception $exception) {
+                $this->error('Falha ao obter atividades do usuário '.$user->id.'. Erro: '.$exception->getMessage());
+                continue;
+            }
 
             if (empty($activities)) {
                 continue;
