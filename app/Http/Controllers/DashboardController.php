@@ -57,8 +57,9 @@ class DashboardController extends Controller
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 
-    public function ranking()
+    public function rankingBadgeUsers()
     {
-
+        $data['data'] = $this->userBadgeService->rankingBadgeUsers();
+        return Response::json($data, HttpResponse::HTTP_OK);
     }
 }

@@ -43,5 +43,5 @@ Route::prefix('point')->middleware('auth:api')->group(function () {
 Route::prefix('dashboard')->middleware('auth:api')->group(function () {
     Route::get('/user-point-badge', 'DashboardController@listUserPointBadge');
     Route::get('/user-badge', 'DashboardController@listUserBadge');
-    Route::get('/ranking', 'DashboardController@ranking');
+    Route::get('/rank-badge-users', 'DashboardController@rankingBadgeUsers');
 });

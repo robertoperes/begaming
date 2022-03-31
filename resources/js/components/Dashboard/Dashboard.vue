@@ -2,7 +2,12 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3">
-        <dashboard-badge-list/>
+        <div class="p-1">
+          <dashboard-badge-list/>
+        </div>
+        <div class="p-1">
+          <dashboard-rank-badge-user />
+        </div>
       </div>
       <div class="col">
         <dashboard-point-badge-list/>
@@ -15,9 +20,11 @@
 
 import DashboardPointBadgeList from "./DashboardPointBadgeList";
 import DashboardBadgeList from "./DashboardBadgeList";
+import DashboardRankBadgeUser from "./DashboardRankBadgeUser";
 
 export default {
   components: {
+    DashboardRankBadgeUser,
     DashboardBadgeList,
     DashboardPointBadgeList
   }

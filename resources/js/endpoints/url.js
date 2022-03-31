@@ -21,6 +21,7 @@ const urls = {
 
     DASHBOARD_USER_POINT_BADGE: `${BASE_URL}/dashboard/user-point-badge`,
     DASHBOARD_BADGE: `${BASE_URL}/dashboard/user-badge`,
+    DASHBOARD_BADGE_USERS_RANK: `${BASE_URL}/dashboard/rank-badge-users`,
 
 }
 

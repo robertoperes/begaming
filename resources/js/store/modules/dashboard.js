@@ -6,7 +6,8 @@ export default {
         points: [
         ],
         badges: [
-        ]
+        ],
+        badgeUsersRank: []
     },
     mutations: {
         setMetaPointBadge(state, value) {
@@ -17,6 +18,9 @@ export default {
         },
         setBadges(state, value) {
             state.badges = value;
+        },
+        setBadgeUsersRank(state, value){
+            state.badgeUsersRank = value;
         }
     },
     getters: {
@@ -28,6 +32,9 @@ export default {
         },
         badges(state) {
             return state.badges;
+        },
+        badgeUsersRank(state) {
+            return state.badgeUsersRank;
         }
     },
     actions: {
@@ -46,6 +53,14 @@ export default {
             }).catch(({response: {data}}) => {
                 commit("setPoints", []);
                 commit("setMetaPointBadge", {});
+                return data;
+            });
+        },
+        async getBadgeUsersRank({commit}, filters) {
+            return api.listBadgeUsersRank(filters).then(({data}) => {
+                commit("setBadgeUsersRank", data.data);
+            }).catch(({response: {data}}) => {
+                commit("setBadgeUsersRank", []);
                 return data;
             });
         },

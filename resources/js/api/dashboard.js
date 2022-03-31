@@ -10,4 +10,7 @@ export default {
     listUserBadge(filters){
         return axios.get(urls.DASHBOARD_BADGE, filters);
     },
+    listBadgeUsersRank(filters){
+        return axios.get(urls.DASHBOARD_BADGE_USERS_RANK, filters);
+    }
 }
