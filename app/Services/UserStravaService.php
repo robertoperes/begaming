@@ -19,7 +19,10 @@ class UserStravaService
 
     public function findByUser(int $userId): UserStrava
     {
-        $userStrava = $this->userStravaRepository->findBy('user_id',$userId)->first();
+        $userStrava = $this->userStravaRepository->findAll([
+            'user_id' => $userId,
+            'active'  => true
+        ])->first();
 
         if (!($userStrava instanceof UserStrava)) {
             throw new \Exception('Usuário não cadastrado');
