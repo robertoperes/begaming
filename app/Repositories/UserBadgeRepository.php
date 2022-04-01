@@ -26,7 +26,7 @@ class UserBadgeRepository extends RepositoryAbstract
                      GROUP BY user.id
                  ) as tb
             ORDER BY tb.total DESC, tb.created_at ASC
-            LIMIT 10');
+            LIMIT 5');
     }
 
 }
