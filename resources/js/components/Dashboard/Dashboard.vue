@@ -2,11 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-3">
-        <div class="p-1">
+        <div class="mb-1">
           <dashboard-badge-list/>
         </div>
-        <div class="p-1">
-          <dashboard-rank-badge-user />
+        <div>
+          <dashboard-rank-badge-user/>
         </div>
       </div>
       <div class="col">

@@ -5,7 +5,7 @@
       <div class="card-header">
         Meus Pontos
       </div>
-      <div class="card-body">
+      <div class="card-body p-1">
         <table class="table table-sm">
           <thead>
           <tr>

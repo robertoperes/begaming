@@ -5,10 +5,8 @@
       <div class="card-header">
         Meus Badges
       </div>
-      <div class="card-body">
-        <p class="card-text">
-          <dashboard-badge-list-item v-for="badge in this.badges" :key="badge.id" :item="badge" :size="40"/>
-        </p>
+      <div class="card-body p-1">
+        <dashboard-badge-list-item v-for="badge in this.badges" :key="badge.id" :item="badge" :size="40"/>
       </div>
     </div>
   </div>

@@ -5,8 +5,7 @@
       <div class="card-header">
         Rank Badges
       </div>
-      <div class="card-body">
-        <div class="card-text">
+      <div class="card-body p-1">
           <table class="table table-sm table-borderless">
             <thead>
             <tr>
@@ -19,7 +18,6 @@
             <dashboard-rank-badge-user-item v-for="(user, index) in this.badgeUsersRank" :key="index" :index="index+1" :item="user"/>
             </tbody>
           </table>
-        </div>
       </div>
     </div>
   </div>
@@ -53,5 +51,7 @@ export default {
 </script>
 
 <style scoped>
-
+table {
+  width: 100%;
+}
 </style>
