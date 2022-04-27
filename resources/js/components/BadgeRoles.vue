@@ -52,9 +52,9 @@
           <td><img src="/images/badges/type/cursos-palestras-classic.png" width="10"> Evolução</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">180</td>
-          <td class="text-center">280</td>
-          <td class="text-center">380</td>
-          <td class="text-center">480</td>
+          <td class="text-center">350</td>
+          <td class="text-center">520</td>
+          <td class="text-center">600</td>
         </tr>
         <tr>
           <td><img src="/images/badges/type/tempo-empresa-classic.png" width="10"> Tempo de empresa</td>
@@ -108,7 +108,7 @@ export default {
           title: 'Bem-Estar',
           description: 'Este Badge demonstra exatamente como queremos que você esteja ao nosso lado: BEM! Ele pontua ações relacionadas à qualidade de vida e saúde, como prática de atividade física e participação em eventos esportivos, etc. É um estímulo para termos uma vida mais saudável!',
           roles: [
-              'Ao longo do ano iremos realizar várias ações para desafiar você a colocar seu bem estar em dia. A cada participação você garante seus pontos! Se você participar de competições esportivas e/ou doar sangue, consegue ainda mais pontos, envie o comprovante no e-mail da damares.nogueira@before.com.br com cópia para a paula.santana@before.com.br.'
+              'Ao longo do ano iremos realizar várias ações para desafiar você a colocar seu bem estar em dia. A cada participação você garante seus pontos! Se você participar de competições esportivas e/ou doar sangue, consegue ainda mais pontos, envie o comprovante no e-mail da dayane.eurico@before.com.br e nayara.deniz@before.com.br com cópia para a paula.santana@before.com.br.'
           ],
           points: [
             {
@@ -156,7 +156,7 @@ export default {
             },
             {
               description: 'Artigo para o blogue',
-              point: 2,
+              point: 10,
               observation: 'Por artigo postado no blogue da Before'
             },
             {
