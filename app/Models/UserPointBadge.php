@@ -20,6 +20,7 @@ class UserPointBadge extends Model
         'input_user_id',
         'event_date',
         'value',
+        'description',
         'created_at',
         'updated_at'
     ];

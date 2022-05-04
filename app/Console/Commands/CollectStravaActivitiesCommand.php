@@ -117,6 +117,7 @@ class CollectStravaActivitiesCommand extends Command
                         'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
                         'input_user_id'              => $user->user_id,
                         'value'                      => 1,
+                        'description'                => 'Atividade Strava',
                         'event_date'                 => $activitDate->format('Y-m-d H:i:s')
                     ]);
                 }

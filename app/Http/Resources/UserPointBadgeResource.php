@@ -10,26 +10,27 @@ class UserPointBadgeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
-            'user'       => [
+            'id'          => $this->id,
+            'user'        => [
                 'id'   => $this->user->id,
                 'name' => $this->user->name
             ],
-            'value'      => $this->value,
-            'type'       => [
+            'value'       => $this->value,
+            'description' => $this->description,
+            'type'        => [
                 'id'          => $this->type->id,
                 'icon'        => $this->type->icon,
                 'description' => $this->type->description
             ],
-            'status'     => [
+            'status'      => [
                 'id'          => $this->status->id,
                 'description' => $this->status->description
             ],
-            'user_input' => [
+            'user_input'  => [
                 'id'   => $this->inputUser->id,
                 'name' => $this->inputUser->name
             ],
-            'event_date' => Carbon::parse($this->event_date,
+            'event_date'  => Carbon::parse($this->event_date,
                 'UTC')->format
             ('Y-m-d'),
         ];
