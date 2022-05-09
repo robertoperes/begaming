@@ -13,9 +13,9 @@ class UserPointBadgeService
     /* @var UserPointBadgeRepository */
     protected $userPointBadgeRepository;
 
-    public function __construct(UserPointBadgeRepository $userPointBadgeRepository)
+    public function __construct()
     {
-        $this->userPointBadgeRepository = $userPointBadgeRepository;
+        $this->userPointBadgeRepository = app(UserPointBadgeRepository::class);
     }
 
     public function get(int $id): ?UserPointBadge
@@ -34,13 +34,14 @@ class UserPointBadgeService
         $itemsPerPage = $filters['per_page'] ?? 10;
         $page         = $filters['page'] ?? 1;
 
-        if(isset($filters['user_id'])){
+        if (isset($filters['user_id'])) {
             return $this->userPointBadgeRepository->list()->where(
-                'user_id','=', $filters['user_id']
+                'user_id', '=', $filters['user_id']
             )->orderBy($order, $orderType)->paginateWithLimit($itemsPerPage, $page);
         }
 
-        return $this->userPointBadgeRepository->list()->orderBy($order, $orderType)->paginateWithLimit($itemsPerPage, $page);
+        return $this->userPointBadgeRepository->list()->orderBy($order, $orderType)->paginateWithLimit($itemsPerPage,
+            $page);
     }
 
     public function create(array $data)
@@ -63,5 +64,15 @@ class UserPointBadgeService
             throw new \Exception('Ponto não encontrado');
         }
         return $point;
+    }
+
+    public function rankingUsersPointsBadges()
+    {
+        return $this->userPointBadgeRepository->rankingUsersPointsBadges();
+    }
+
+    public function listTotalUsersPointsBadges(int $user_id)
+    {
+        return $this->userPointBadgeRepository->listTotalUsersPointsBadges($user_id);
     }
 }

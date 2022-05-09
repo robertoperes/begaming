@@ -16,7 +16,7 @@
           <div class="dropdown-menu">
             <h6 class="dropdown-header">Badges</h6>
             <router-link :to="{name:'badges'}" class="dropdown-item">
-              <i class="bi bi-bookmark"></i> Badges
+              <i class="bi bi-award"></i> Badges
             </router-link>
             <router-link :to="{name:'badges'}" class="dropdown-item disabled">Tipos Badges</router-link>
             <router-link :to="{name:'badges'}" class="dropdown-item disabled">Classificação Badges</router-link>
@@ -29,7 +29,7 @@
               <i class="bi bi-person-lines-fill"></i> Pontos
             </router-link>
             <router-link :to="{name:'userBadge'}" class="dropdown-item">
-              <i class="bi bi-bookmark"></i> Badges
+              <i class="bi bi-award"></i> Badges
             </router-link>
           </div>
         </div>

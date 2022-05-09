@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BadgeResourceCollection;
-use App\Http\Resources\DashboardRankingBadgeUsersResourceCollection;
+use App\Http\Resources\Dashboard\RankingBadgeUsersResourceCollection;
+use App\Http\Resources\Dashboard\RankingUsersPointsBadgesResourceCollection;
+use App\Http\Resources\TotalUserPointBadgeResourceCollection;
 use App\Http\Resources\UserPointBadgeResourceCollection;
 use App\Services\BadgeService;
 use App\Services\UserBadgeService;
@@ -47,7 +49,8 @@ class DashboardController extends Controller
             'page'     => $request->get('page'),
             'per_page' => $request->get('per_page'),
         ];
-        $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'event_date', 'DESC'));
+        $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'event_date',
+            'DESC'));
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 
@@ -58,9 +61,23 @@ class DashboardController extends Controller
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 
+    public function listTotalUserPointBadge()
+    {
+        $data = new TotalUserPointBadgeResourceCollection($this->userPointBadgeService->listTotalUsersPointsBadges(
+            auth()->user()->id
+        ));
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
+
     public function rankingBadgeUsers()
     {
-        $data = new DashboardRankingBadgeUsersResourceCollection($this->userBadgeService->rankingBadgeUsers());
+        $data = new RankingBadgeUsersResourceCollection($this->userBadgeService->rankingBadgeUsers());
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
+
+    public function rankingUsersPointsBadges()
+    {
+        $data = new RankingUsersPointsBadgesResourceCollection($this->userPointBadgeService->rankingUsersPointsBadges());
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 }

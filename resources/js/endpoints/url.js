@@ -20,9 +20,10 @@ const urls = {
     BADGE_CLASSIFICATIONS: `${BASE_URL}/badge/classifications`,
 
     DASHBOARD_USER_POINT_BADGE: `${BASE_URL}/dashboard/user-point-badge`,
+    DASHBOARD_TOTAL_USER_POINT_BADGE: `${BASE_URL}/dashboard/user-total-points-badges`,
+    DASHBOARD_RANK_USERS_POINTS_BADGE: `${BASE_URL}/dashboard/rank-users-points-badges`,
     DASHBOARD_BADGE: `${BASE_URL}/dashboard/user-badge`,
     DASHBOARD_BADGE_USERS_RANK: `${BASE_URL}/dashboard/rank-badge-users`,
-
 }
 
 export default urls;

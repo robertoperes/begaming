@@ -28,7 +28,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="item in badge.points" :key="badge.description">
+              <tr v-for="item in badge.points">
                 <th scope="row">{{ item.description }}</th>
                 <td class="text-center">{{ item.point }}</td>
                 <td>{{ item.observation }}</td>

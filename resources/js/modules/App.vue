@@ -47,7 +47,8 @@ export default {
 <style scoped>
 #app {
   position: relative;
-  min-width: 500px;
+  min-width: 900px;
+  min-height: 400px;
   background-color: #FFFFFF;
   border: solid 1px #232323;
   border-top: none;

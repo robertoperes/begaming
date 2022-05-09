@@ -46,10 +46,12 @@ export default {
                 return data;
             });
         },
-        async getPointBadgeList({commit}, filters) {
+        async getPointBadgeList({commit, state}, filters) {
             return api.listUserPointBadge(filters).then(({data}) => {
-                commit("setPoints", data.data);
+                const itens = state.points.concat(data.data);
+                commit("setPoints", itens);
                 commit("setMetaPointBadge", data.meta);
+                return data;
             }).catch(({response: {data}}) => {
                 commit("setPoints", []);
                 commit("setMetaPointBadge", {});
