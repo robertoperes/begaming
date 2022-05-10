@@ -51,6 +51,11 @@ class UserService
         return $this->userRepository->update($user, $data);
     }
 
+    public function findAll($filter)
+    {
+        return $this->userRepository->findAll($filter);
+    }
+
     public function findUserBy($filter): User
     {
         $user = $this->userRepository->findUserBy($filter)->first();
