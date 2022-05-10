@@ -8,13 +8,13 @@
         <div class="card card-badge shadow-sm d-inline-flex mr-1" v-for="badge in this.data" :key="'badge-' + badge.id">
           <div class="card-body">
             <div class="row">
-              <div class="col-5">
-                <img class="card-img-top" :src="badge.icon" alt="">
+              <div class="col-4 p-0 m-0">
+                <img class="badge-img" :src="badge.icon" alt="">
               </div>
-              <div class="col-7">
+              <div class="col-8 p-0 m-0">
                 <div class="card-title">
                   <div><strong>{{ badge.name }}</strong></div>
-                  <div class="small">{{ badge.classification.description }}</div>
+                  <div class="small">{{ badge.classification.description }} ({{ badge.value }})</div>
                 </div>
               </div>
             </div>
@@ -119,6 +119,11 @@ div.me {
 
 div.user-ranking {
   font-size: 12px;
+}
+
+img.badge-img {
+  height: 50px;
+  width: auto;
 }
 
 </style>
