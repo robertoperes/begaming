@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light bg-light justify-content-between">
       <a class="navbar-brand">Pontos</a>
       <div class="form-inline">
-        <button @click="add();" type="button" class="btn">Novo Badge</button>
+        <button @click="add();" type="button" class="btn">Novo Ponto</button>
       </div>
     </nav>
     <point-badge-list/>

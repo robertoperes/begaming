@@ -7,16 +7,17 @@
         <button @click="goBack();" type="button" class="btn">Lista Pontos</button>
       </div>
     </nav>
-    <form v-on:submit.prevent="submitForm">
+    <form v-on:submit.prevent="submitForm" v-if="!isLoading">
       <div class="form-group row">
         <label for="user" class="col-sm-2 col-form-label">Colaborador</label>
         <div class="col-sm-10">
-          <select id="user" name="user" class="form-control" v-model="item.user_id" required>
+          <select v-if="!item.id" id="user" name="users[]" class="form-control" v-model="item.users" required multiple size="10">
             <option value="">Selecione</option>
             <option v-for="user in this.users" :key="user.id" :value="user.id">
               {{ user.name }}
             </option>
           </select>
+          <input v-else type="text" readonly :value=" userName " class="form-control">
         </div>
       </div>
       <div class="form-group row">
@@ -45,7 +46,7 @@
       <div class="form-group row">
         <label for="value" class="col-sm-2 col-form-label">Valor</label>
         <div class="col-sm-10">
-          <input type="number" class="form-control" name="description" id="value" v-model="item.value" required>
+          <input type="number" class="form-control" name="value" id="value" v-model="item.value" required>
         </div>
       </div>
       <div class="form-group row">
@@ -55,6 +56,12 @@
                       name="event_date"
                       :required="true" :use-utc="true" :bootstrap-styling="true"
           ></datepicker>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="value" class="col-sm-2 col-form-label">Descrição</label>
+        <div class="col-sm-10">
+          <textarea v-model="item.description" class="form-control" name="description"></textarea>
         </div>
       </div>
       <div class="form-group row">
@@ -82,7 +89,8 @@ export default {
         description: '',
         active: null,
         badge_type_id: null,
-        badge_classification_id: null
+        badge_classification_id: null,
+        users: [],
       },
       isLoading: false,
       ptBR: ptBR
@@ -113,12 +121,17 @@ export default {
   computed: {
     ...mapGetters('badge', ['types', 'classifications']),
     ...mapGetters('point', ['status']),
-    ...mapGetters('user', ['users'])
+    ...mapGetters('user', ['users']),
+    userName(){
+      return this.users.find(user => user.id === this.item.user_id).name;
+    }
   },
   async created() {
     this.isLoading = true;
     await this.getTypes();
-    await this.getList();
+    await this.getList({
+      per_page: 999
+    });
     await this.getStatus();
 
     if (this.id === undefined || isNaN(this.id)) {

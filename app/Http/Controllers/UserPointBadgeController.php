@@ -55,10 +55,17 @@ class UserPointBadgeController extends Controller
 
     public function create(Request $request)
     {
-        $data = new UserPointBadgeResource($this->userPointBadgeService->create(
-            array_merge($request->all(), ['input_user_id' => auth()->user()->id])
-        ));
-        return Response::json($data, HttpResponse::HTTP_OK);
+
+        $data = $request->all();
+        $users = $request->get('users');
+        $data['input_user_id'] = auth()->user()->id;
+
+        foreach ($users as $user){
+            $data['user_id'] = $user;
+            $point = new UserPointBadgeResource($this->userPointBadgeService->create($data));
+        }
+
+        return Response::json([], HttpResponse::HTTP_OK);
     }
 
     public function update(Request $request)
