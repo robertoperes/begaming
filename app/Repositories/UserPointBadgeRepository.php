@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enuns\UserPointBadgeStatusEnum;
 use App\Models\UserPointBadge;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +56,8 @@ class UserPointBadgeRepository extends RepositoryAbstract
                                    user.admission_date         as admission_date
                             FROM user
                                      INNER JOIN user_point_badge ON (user_point_badge.user_id = user.id)
-                            WHERE user.active = true
+                            WHERE user.active = true AND 
+                                  user_point_badge.user_point_badge_status_id = '.UserPointBadgeStatusEnum::APPROVED.'
                             GROUP BY user.id, user_point_badge.badge_type_id) as tb_users
                                INNER JOIN badge ON (badge.badge_type_id = tb_users.badge_type_id)
                                INNER JOIN badge_classification ON (badge_classification.id = badge.badge_classification_id)
@@ -78,6 +80,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                     LEFT JOIN user_point_badge ON (
                         user_point_badge.badge_type_id = badge_type.id 
                             AND user_id = ' . $user_id . ' ) 
+                WHERE user_point_badge.user_point_badge_status_id = '.UserPointBadgeStatusEnum::APPROVED.'
                 GROUP BY badge_type.id ORDER BY badge_type.description;
         ');
     }
