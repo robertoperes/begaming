@@ -12,11 +12,11 @@
             <img v-if="(index+1) === 1" src="/images/icons/medal-1st.svg" width="5" alt=""/>
             <img v-else-if="(index+1) === 2" src="/images/icons/medal-2nd.svg" width="5" alt=""/>
             <img v-else-if="(index+1) === 3" src="/images/icons/medal-3rd.svg" width="5" alt=""/>
-            <span v-else style="font-size: 10px">#{{ index+1 }}</span>
+            <span v-else style="font-size: 10px">#{{ index + 1 }}</span>
           </div>
           <div class="col-2 p-0">
-            <img :src="user.google_avatar" class="rounded-circle" width="35" height="35"
-                 alt="" v-show="user.google_avatar"/>
+            <img :src="user.google_avatar || '/images/icons/profile.png'" class="rounded-circle" width="35" height="35"
+                 alt=""/>
           </div>
           <div class="col-6 p-0">{{ firstName(user.name) }}</div>
           <div class="col-2 p-0 text-center"><strong>{{ user.total }}</strong></div>
