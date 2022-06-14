@@ -24,12 +24,12 @@ class UserBadge extends Model
 
     public function badge(): HasOne
     {
-        return $this->hasOne(Badge::class,'badge_id','id');
+        return $this->hasOne(Badge::class,'id','badge_id');
     }
 
     public function user(): HasOne
     {
-        return $this->hasOne(User::class,'user_id','id');
+        return $this->hasOne(User::class,'id','user_id');
     }
 
 }

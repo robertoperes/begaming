@@ -6,6 +6,7 @@ use App\Models\UserPointBadge;
 use App\Repositories\UserPointBadgeRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class UserPointBadgeService
 {
@@ -64,6 +65,11 @@ class UserPointBadgeService
             throw new \Exception('Ponto não encontrado');
         }
         return $point;
+    }
+
+    public function findAll(array $filters): Collection
+    {
+        return $this->userPointBadgeRepository->findAll($filters);
     }
 
     public function rankingUsersPointsBadges()
