@@ -33,6 +33,7 @@
         </div>
       </div>
     </div>
+    <small class="p-1"><i>* Critério de desempate: data de admissão</i></small>
   </div>
 </template>
 

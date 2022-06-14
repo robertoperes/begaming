@@ -16,7 +16,7 @@ class UserBadgeRepository extends RepositoryAbstract
             FROM (
                      SELECT user.id,
                             count(*)                   as total,
-                            MIN(user_badge.created_at) as created_at,
+                            user.admission_date as admission_date,
                             user.name,
                             user.google_avatar,
                             user.active
@@ -25,7 +25,7 @@ class UserBadgeRepository extends RepositoryAbstract
                      WHERE user.active = true
                      GROUP BY user.id
                  ) as tb
-            ORDER BY tb.total DESC, tb.created_at ASC
+            ORDER BY tb.total DESC, tb.admission_date ASC
             LIMIT 5');
     }
 

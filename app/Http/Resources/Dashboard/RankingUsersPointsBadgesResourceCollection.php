@@ -24,10 +24,11 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
             $data[$badge_id]['value']                 =
                 $item->value;
             $data[$badge_id]['users'][$item->user_id] = [
-                'id'            => $item->user_id,
-                'name'          => $item->user_name,
-                'google_avatar' => $item->user_google_avatar,
-                'total'         => (int)$item->total
+                'id'             => $item->user_id,
+                'name'           => $item->user_name,
+                'google_avatar'  => $item->user_google_avatar,
+                'total'          => (int)$item->total,
+                'admission_date' => $item->admission_date
             ];
         }
 
@@ -35,7 +36,9 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
             if (empty($item['users'])) {
                 continue;
             }
-            array_multisort(array_column($item['users'], 'total'), SORT_DESC,
+            array_multisort(
+                array_column($item['users'], 'total'), SORT_DESC,
+                array_column($item['users'], 'admission_date'), SORT_ASC,
                 $item['users']);
         }
 
