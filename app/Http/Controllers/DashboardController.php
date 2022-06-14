@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enuns\UserPointBadgeStatusEnum;
 use App\Http\Resources\BadgeResourceCollection;
 use App\Http\Resources\Dashboard\RankingBadgeUsersResourceCollection;
 use App\Http\Resources\Dashboard\RankingUsersPointsBadgesResourceCollection;
@@ -45,9 +46,10 @@ class DashboardController extends Controller
     public function listUserPointBadge(Request $request)
     {
         $filters = [
-            'user_id'  => auth()->user()->id,
-            'page'     => $request->get('page'),
-            'per_page' => $request->get('per_page'),
+            'user_id'                    => auth()->user()->id,
+            'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
+            'page'                       => $request->get('page'),
+            'per_page'                   => $request->get('per_page'),
         ];
         $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'event_date',
             'DESC'));

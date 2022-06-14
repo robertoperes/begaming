@@ -35,13 +35,9 @@ class UserPointBadgeService
         $itemsPerPage = $filters['per_page'] ?? 10;
         $page         = $filters['page'] ?? 1;
 
-        if (isset($filters['user_id'])) {
-            return $this->userPointBadgeRepository->list()->where(
-                'user_id', '=', $filters['user_id']
-            )->orderBy($order, $orderType)->paginateWithLimit($itemsPerPage, $page);
-        }
-
-        return $this->userPointBadgeRepository->list()->orderBy($order, $orderType)->paginateWithLimit($itemsPerPage,
+        unset($filters['per_page']);
+        unset($filters['page']);
+        return $this->userPointBadgeRepository->list($filters)->orderBy($order, $orderType)->paginateWithLimit($itemsPerPage,
             $page);
     }
 

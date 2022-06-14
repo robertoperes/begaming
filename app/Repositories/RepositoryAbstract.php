@@ -18,12 +18,12 @@ abstract class RepositoryAbstract implements RepositoryInterface
         return $instance->get($attributes);
     }
 
-    public function list(string $order = null, $orderBy = 'ASC'): Builder
+    public function list(array $filters = [], string $order = null, $orderBy = 'ASC'): Builder
     {
         if ($order) {
-            return $this->createModel()->select(['*'])->orderBy($order, $orderBy);
+            return $this->createModel()->select(['*'])->where($filters)->orderBy($order, $orderBy);
         }
-        return $this->createModel()->select(['*']);
+        return $this->createModel()->select(['*'])->where($filters);
     }
 
     public function create(array $attributes = []): Model

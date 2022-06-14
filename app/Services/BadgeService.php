@@ -20,7 +20,9 @@ class BadgeService
         $itemsPerPage = $filters['per_page'] ?? 10;
         $page         = $filters['page'] ?? 1;
 
-        return $this->badgeRepository->list()->paginateWithLimit($itemsPerPage, $page);
+        unset($filters['per_page']);
+        unset($filters['page']);
+        return $this->badgeRepository->list($filters)->paginateWithLimit($itemsPerPage, $page);
     }
 
     public function get(int $id)

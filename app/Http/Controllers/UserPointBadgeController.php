@@ -40,7 +40,7 @@ class UserPointBadgeController extends Controller
         $filters = [
             'page' => $request->get('page')
         ];
-        $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'created_at'));
+        $data    = new UserPointBadgeResourceCollection($this->userPointBadgeService->list($filters, 'id', 'DESC'));
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 
