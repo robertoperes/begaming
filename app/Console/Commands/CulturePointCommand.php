@@ -80,6 +80,10 @@ class CulturePointCommand extends Command
                 foreach ($userBadges as $userBadge) {
                     $key = $userBadge->badge->type->id . '-' . $userBadge->badge->classification->id;
 
+                    if( $userBadge->badge->type->id == BadgeTypeEnum::CULTURE){
+                        continue;
+                    }
+
                     if (array_key_exists($key, $listUniqueBadges)) {
                         continue;
                     }

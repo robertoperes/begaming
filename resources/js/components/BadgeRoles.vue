@@ -249,7 +249,9 @@ export default {
           title: 'Cultura',
           description: 'Aqui está o reconhecimento do reconhecimento. Quanto mais Badges você tiver, mais perto de ganhar este você estará. \n' +
               'Por isso, viva intensamente a cultura da Before!',
-          roles: [],
+          roles: [
+              'Todos os badges contabilizam exceto o badge de Cultura.'
+          ],
           points: [
             {
               description: 'Badges diferentes ganhos - Classic',
