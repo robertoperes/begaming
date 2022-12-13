@@ -22,7 +22,7 @@ class UserBadgeRepository extends RepositoryAbstract
                             user.active
                      FROM user
                               INNER JOIN user_badge ON user_badge.user_id = user.id
-                     WHERE user.active = true
+                     WHERE user.active = true AND user.id NOT IN(70, 71, 72)
                      GROUP BY user.id
                  ) as tb
             ORDER BY tb.total DESC, tb.admission_date ASC

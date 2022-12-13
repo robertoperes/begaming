@@ -37,7 +37,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                        badge_classification_id,
                        badge_classification_description,
                        MIN(tb_rank.badge_value) as value,
-                       tb_rank.total,
+                       (tb_rank.total + tb_rank.total_history) as total,
                        admission_date
                 FROM (SELECT tb_users.*,
                              badge.id                         as badge_id,
@@ -52,12 +52,18 @@ class UserPointBadgeRepository extends RepositoryAbstract
                                    user.name                   as user_name,
                                    user.google_avatar          as user_google_avatar,
                                    SUM(user_point_badge.value) as total,
+                                   (SELECT 
+                                        SUM(value) as total 
+                                    FROM 
+                                        user_point_badge_history 
+                                    WHERE 
+                                        (user_point_badge_history.user_id = user.id AND 
+                                         user_point_badge_history.badge_type_id = user_point_badge.badge_type_id)) as total_history,
                                    user_point_badge.badge_type_id,
                                    user.admission_date         as admission_date
                             FROM user
                                      INNER JOIN user_point_badge ON (user_point_badge.user_id = user.id)
-                            WHERE user.active = true AND 
-                                  user_point_badge.user_point_badge_status_id = '.UserPointBadgeStatusEnum::APPROVED.'
+                            WHERE user.active AND user.id NOT IN(70, 71, 72)
                             GROUP BY user.id, user_point_badge.badge_type_id) as tb_users
                                INNER JOIN badge ON (badge.badge_type_id = tb_users.badge_type_id)
                                INNER JOIN badge_classification ON (badge_classification.id = badge.badge_classification_id)

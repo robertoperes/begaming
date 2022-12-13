@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Enuns\BadgeTypeEnum;
 use App\Enuns\UserPointBadgeStatusEnum;
 use App\Services\UserBadgeService;
+use App\Services\UserPointBadgeHistoryService;
 use App\Services\UserPointBadgeService;
 use App\Services\UserService;
 use Carbon\Carbon;
@@ -34,11 +35,15 @@ class CreateBadgeCommand extends Command
     /* @var UserPointBadgeService */
     protected $userPointBadgeService;
 
+    /* @var UserPointBadgeHistoryService */
+    protected $userPointBadgeHistoryService;
+
     public function __construct()
     {
-        $this->userService           = app(UserService::class);
-        $this->userBadgeService      = app(UserBadgeService::class);
-        $this->userPointBadgeService = app(UserPointBadgeService::class);
+        $this->userService                  = app(UserService::class);
+        $this->userBadgeService             = app(UserBadgeService::class);
+        $this->userPointBadgeService        = app(UserPointBadgeService::class);
+        $this->userPointBadgeHistoryService = app(UserPointBadgeHistoryService::class);
         parent::__construct();
     }
 
@@ -75,31 +80,13 @@ class CreateBadgeCommand extends Command
 
                     if (in_array($user->badge_type_id, $this->expiresPoints)) {
 
-                        $points = $this->userPointBadgeService->findAll([
-                            'user_id'                    => $user->user_id,
-                            'badge_type_id'              => $user->badge_type_id,
-                            'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
+                        $this->userPointBadgeHistoryService->create([
+                            'user_id'       => $user->user_id,
+                            'badge_type_id' => $user->badge_type_id,
+                            'value'         => ($user->total * -1)
                         ]);
 
-                        $totalPoints = 0;
-                        foreach ($points as $point) {
-
-                            if ($totalPoints >= $user->value) {
-                                break;
-                            }
-
-                            $this->userPointBadgeService->update($point, [
-                                'event_date'                 => $point->event_date,
-                                'user_point_badge_status_id' =>
-                                    UserPointBadgeStatusEnum::COMPENSATED,
-                                'updated_at'                 => $now->format('Y-m-d H:i:s')
-                            ]);
-
-                            $totalPoints += $point->value;
-                            $this->info('Compensando ponto ' . $point->id);
-                            $this->info('Total ' . $totalPoints . ' de ' . $user->value);
-
-                        }
+                        $this->info('Compensando Total ' . $user->total . ' de ' . $user->value);
                     }
                     $total++;
                     DB::commit();
