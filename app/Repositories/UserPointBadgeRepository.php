@@ -84,7 +84,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                     IFNULL((SELECT SUM(value) as total FROM user_point_badge_history WHERE 
                                         (user_point_badge_history.user_id =  ' . $user_id . ' AND 
                                          user_point_badge_history.badge_type_id = user_point_badge.badge_type_id)),0)
-                    ) as total ,
+                    ) as total
                 FROM 
                     badge_type
                     LEFT JOIN user_point_badge ON (
