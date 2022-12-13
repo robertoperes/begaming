@@ -80,13 +80,16 @@ class UserPointBadgeRepository extends RepositoryAbstract
     {
         return DB::connection()->select('
                 SELECT 
-                    badge_type.*, SUM(IFNULL(user_point_badge.value,0)) as total 
+                    badge_type.*, (SUM(IFNULL(user_point_badge.value,0)) + 
+                    IFNULL((SELECT SUM(value) as total FROM user_point_badge_history WHERE 
+                                        (user_point_badge_history.user_id =  ' . $user_id . ' AND 
+                                         user_point_badge_history.badge_type_id = user_point_badge.badge_type_id)),0)
+                    ) as total ,
                 FROM 
                     badge_type
                     LEFT JOIN user_point_badge ON (
                         user_point_badge.badge_type_id = badge_type.id 
                             AND user_id = ' . $user_id . ' ) 
-                WHERE user_point_badge.user_point_badge_status_id = '.UserPointBadgeStatusEnum::APPROVED.'
                 GROUP BY badge_type.id ORDER BY badge_type.description;
         ');
     }
