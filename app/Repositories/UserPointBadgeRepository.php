@@ -37,7 +37,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                        badge_classification_id,
                        badge_classification_description,
                        MIN(tb_rank.badge_value) as value,
-                       (tb_rank.total + tb_rank.total_history) as total,
+                       (tb_rank.total + IFNULL(tb_rank.total_history,0)) as total,
                        admission_date
                 FROM (SELECT tb_users.*,
                              badge.id                         as badge_id,
