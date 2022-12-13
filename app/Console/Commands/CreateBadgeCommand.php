@@ -83,7 +83,7 @@ class CreateBadgeCommand extends Command
                         $this->userPointBadgeHistoryService->create([
                             'user_id'       => $user->user_id,
                             'badge_type_id' => $user->badge_type_id,
-                            'value'         => ($user->total * -1)
+                            'value'         => ($user->value * -1)
                         ]);
 
                         $this->info('Compensando Total ' . $user->total . ' de ' . $user->value);
