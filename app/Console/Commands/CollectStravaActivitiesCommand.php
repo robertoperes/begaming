@@ -15,7 +15,7 @@ use Strava;
 class CollectStravaActivitiesCommand extends Command
 {
 
-    const START_ACTIVITIES_EPOCH = 1646092800; // 01/03/2022 00:00:00
+    const START_ACTIVITIES_EPOCH = 1672531200; // 01/01/2023 00:00:00
 
     protected $signature   = 'command:collect_strava_activities';
     protected $description = 'Coleta as atividades realizadas pelos colaboradores no Strava';
