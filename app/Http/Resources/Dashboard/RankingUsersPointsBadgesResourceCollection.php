@@ -13,7 +13,7 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
 
         foreach ($this->collection as $item) {
 
-            if(empty($item->total)) {
+            if(empty($item->total) || (((int)$item->total) === 0)) {
                 continue;
             }
 
