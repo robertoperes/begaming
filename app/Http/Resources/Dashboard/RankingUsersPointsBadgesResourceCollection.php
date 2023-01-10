@@ -12,6 +12,11 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
         $data = [];
 
         foreach ($this->collection as $item) {
+
+            if(empty($item->total)) {
+                continue;
+            }
+
             $badge_id                                 = $item->badge_id;
             $data[$badge_id]['id']                    = $badge_id;
             $data[$badge_id]['name']                  = $item->badge_name;
