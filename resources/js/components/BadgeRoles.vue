@@ -118,7 +118,7 @@ export default {
             },
             {
               description: 'Competição esportiva',
-              point: 20,
+              point: 10,
               observation: 'Por competição comprovada enviada para o e-mail do RH'
             },
             {
@@ -283,12 +283,12 @@ export default {
           points: [
             {
               description: 'Competição interna - Vencedor da competição',
-              point: 1,
+              point: 5,
               observation: 'Ser campeão na competição'
             },
             {
               description: 'Competição interna - Participação',
-              point: 1,
+              point: 3,
               observation: 'Participação aos eventos de competição interna'
             },
             {
