@@ -83,10 +83,10 @@
         <tr>
           <td><img src="/images/badges/type/engajamento-classic.png" width="10"> Engajamento</td>
           <td class="text-center">Pontos</td>
-          <td class="text-center">215</td>
-          <td class="text-center">391</td>
-          <td class="text-center">567</td>
-          <td class="text-center">745</td>
+          <td class="text-center">260</td>
+          <td class="text-center">320</td>
+          <td class="text-center">380</td>
+          <td class="text-center">450</td>
         </tr>
         </tbody>
       </table>
