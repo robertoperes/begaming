@@ -69,6 +69,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                                INNER JOIN badge_classification ON (badge_classification.id = badge.badge_classification_id)
                                INNER JOIN badge_type ON (badge_type.id = badge.badge_type_id)
                                LEFT JOIN user_badge ON (user_badge.user_id = tb_users.user_id AND user_badge.badge_id = badge.id)
+                            WHERE badge.active = 1
                       ORDER BY user_id, badge.value) as tb_rank
                 WHERE tb_rank.user_badge_id IS NULL
                 GROUP BY tb_rank.user_id, tb_rank.badge_type_id
