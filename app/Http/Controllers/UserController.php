@@ -38,6 +38,7 @@ class UserController extends Controller
         $filters = [
             'page'     => $request->get('page'),
             'per_page' => $request->get('per_page'),
+            'active'   => $request->get('active'),
         ];
         $data    = new UserResourceCollection($this->userService->list($filters, 'name'));
         return Response::json($data, HttpResponse::HTTP_OK);

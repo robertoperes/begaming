@@ -37,7 +37,7 @@ class UserService
         unset($filters['per_page']);
         unset($filters['page']);
 
-        return $this->userRepository->list($filters, $order, $orderType)->paginateWithLimit($itemsPerPage, $page);
+        return $this->userRepository->list(array_filter($filters), $order, $orderType)->paginateWithLimit($itemsPerPage, $page);
     }
 
     public function create(array $data): User

@@ -130,7 +130,8 @@ export default {
     this.isLoading = true;
     await this.getTypes();
     await this.getList({
-      per_page: 999
+      per_page: 999,
+      active: true
     });
     await this.getStatus();
 
