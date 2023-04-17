@@ -131,7 +131,7 @@ export default {
     await this.getTypes();
     await this.getList({
       per_page: 999,
-      active: true
+      active: 1
     });
     await this.getStatus();
 
