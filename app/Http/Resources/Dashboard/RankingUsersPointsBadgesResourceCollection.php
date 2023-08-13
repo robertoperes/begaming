@@ -11,11 +11,21 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
     {
         $data = [];
 
+        $uniqueBadgeType = [];
+
         foreach ($this->collection as $item) {
 
-            if(empty($item->total) || (((int)$item->total) === 0)) {
+            if(empty($item->total) || (((int)$item->total) === 0) || $item->has_user_badge == 1) {
                 continue;
             }
+
+            if(array_key_exists($item->user_id,$uniqueBadgeType) &&
+                array_key_exists($item->badge_type_id,$uniqueBadgeType[$item->user_id])
+            ){
+                continue;
+            }
+
+            $uniqueBadgeType[$item->user_id][$item->badge_type_id] = true;
 
             $badge_id                                 = $item->badge_id;
             $data[$badge_id]['id']                    = $badge_id;
