@@ -56,7 +56,7 @@ export default {
       return (userId === this.user.id)
     },
     showUser(index, userId) {
-      return (index < 5 || userId === this.user.id)
+      return (index < 10 || userId === this.user.id)
     },
     fetch() {
       return api.listRankingUsersPointBadges({}).then(({data}) => {
