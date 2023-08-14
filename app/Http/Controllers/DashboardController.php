@@ -13,6 +13,7 @@ use App\Services\UserBadgeService;
 use App\Services\UserPointBadgeService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
@@ -79,7 +80,12 @@ class DashboardController extends Controller
 
     public function rankingUsersPointsBadges()
     {
-        $data = new RankingUsersPointsBadgesResourceCollection($this->userPointBadgeService->rankingUsersPointsBadges());
+        if(!Cache::has('ranking-points')){
+            $data = new RankingUsersPointsBadgesResourceCollection($this->userPointBadgeService->rankingUsersPointsBadges());
+            Cache::put('ranking-points', json_encode($data), now()->addMinutes(30));
+        } else {
+            $data = json_decode(Cache::get('ranking-points'), true);
+        }
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 }
