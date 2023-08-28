@@ -47,6 +47,21 @@ services:
     networks:
       - begaming
 
+  webpack:
+    build:
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: ./docker/images/nodejs.dockerfile
+    tty: true
+    container_name: begaming-webpack
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+    networks:
+      - begaming
+
 networks:
   begaming:
     driver: bridge

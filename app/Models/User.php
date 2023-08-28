@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use CodeToad\Strava\Strava;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -45,14 +43,23 @@ class User extends Authenticatable
         return $this->belongsToMany(Badge::class, 'user_badge', 'user_id', 'badge_id');
     }
 
-    public function points()
+    public function points(): HasMany
     {
         return $this->hasMany(UserPointBadge::class, 'user_id', 'id');
     }
 
-    public function strava()
+    public function strava(): HasOne
     {
         return $this->hasOne(UserStrava::class, 'user_id', 'id')->where('user_strava.active', '=', true);
     }
 
+    public function team(): HasOne
+    {
+        return $this->hasOne(Team::class, 'id', 'team_id');
+    }
+
+    public function events(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class, 'user_event', 'user_id', 'id');
+    }
 }
