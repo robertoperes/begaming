@@ -16,14 +16,6 @@
         nível de pontuação em cada categoria, que incluem ações voltadas para o bem-estar, capacitação profissional,
         atingimento das metas, compartilhamento de conhecimento, entre outros.
       </p>
-      <h6>
-        PONTUAÇÃO NECESSÁRIA PARA GANHAR OS BADGES
-      </h6>
-      <p>
-        Esta é a pontuação para atingir cada Badge em 2022.
-        Como mudamos algumas regras, a pontuação vai valer a partir de Março de 2022. Então você tem 10 meses para
-        acumular sua pontuação e conquistar seu Badge!
-      </p>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <caption>* Anual (Zera na passagem de nível exceto Cultura e Tempo de Empresa)</caption>
