@@ -51,6 +51,8 @@ class UserPointBadgeRepository extends RepositoryAbstract
                                SUM(value) as total
                            FROM
                                user_point_badge
+                           WHERE 
+                                user_point_badge_status_id != '.UserPointBadgeStatusEnum::DISABLED.'
                            GROUP BY user_id, badge_type_id) AS points ON
                         (points.user_id = user.id AND points.badge_type_id = badge_type.id)
                 LEFT JOIN (SELECT
