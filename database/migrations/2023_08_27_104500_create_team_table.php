@@ -28,9 +28,9 @@ class CreateTeamTable extends Migration
             $table->tinyInteger('active')->default('1');
 
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamp('updated_at')->nullable()->default(DB::raw('NULL ON UPDATE CURRENT_TIMESTAMP'));
-            $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
 
             $table->foreign('created_by', 'idx_team_created_by')
                 ->references('id')->on('user')

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class CulturePointCommand extends Command
 {
 
-    protected $signature   = 'command:culture_point';
+    protected $signature   = 'culture_point';
     protected $description = 'Gera os pontos de Cultura';
 
     protected $pointBadgeWeight = [

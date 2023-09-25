@@ -6,6 +6,7 @@ use App\Console\Commands\CollectStravaActivitiesCommand;
 use App\Console\Commands\CompanyTimePointCommand;
 use App\Console\Commands\CreateBadgeCommand;
 use App\Console\Commands\CulturePointCommand;
+use App\Console\Commands\ImportUsersCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +18,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CollectStravaActivitiesCommand::class
+        CollectStravaActivitiesCommand::class,
+        CompanyTimePointCommand::class,
+        CulturePointCommand::class,
+        CreateBadgeCommand::class,
+        ImportUsersCommand::class
     ];
 
     /**
@@ -38,6 +43,9 @@ class Kernel extends ConsoleKernel
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
         $schedule->command(CreateBadgeCommand::class)->cron('30 5 * * *')
+            ->appendOutputTo(storage_path() . '/logs/schedule.log');
+
+        $schedule->command(ImportUsersCommand::class)->cron('0 */2 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
     }
 

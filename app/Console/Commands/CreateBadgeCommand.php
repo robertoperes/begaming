@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class CreateBadgeCommand extends Command
 {
 
-    protected $signature   = 'command:create_badge';
+    protected $signature   = 'create_badge';
     protected $description = 'Gera os badges';
 
     protected $expiresPoints = [
@@ -66,9 +66,9 @@ class CreateBadgeCommand extends Command
                     continue;
                 }
 
-                DB::beginTransaction();
-
                 try {
+
+                    DB::beginTransaction();
 
                     $badge = $this->userBadgeService->create([
                         'user_id'    => $user->user_id,
@@ -90,6 +90,7 @@ class CreateBadgeCommand extends Command
                     }
                     $total++;
                     DB::commit();
+
                 } catch (\Exception $exception) {
                     $this->error($exception->getMessage());
                     DB::rollBack();

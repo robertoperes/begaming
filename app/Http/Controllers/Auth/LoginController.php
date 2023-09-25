@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 
 class LoginController extends Controller
 {
@@ -74,16 +75,7 @@ class LoginController extends Controller
                 'admission_date' => $user->admission_date
             ]);
         } catch (\Exception $exception) {
-            $user = $this->userService->create([
-                'active'        => true,
-                'name'          => $googleUser->name,
-                'email'         => $googleUser->email,
-                'password'      => Hash::make(''),
-                'google_id'     => $googleUser->id,
-                'google_avatar' => $avatarUrl,
-                'api_token'     => Str::random(60),
-                'created_at'    => Carbon::now('UTC')
-            ]);
+            throw new \Exception('Usuário não encontrado');
         }
 
         auth()->login($user, true);

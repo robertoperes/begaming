@@ -15,9 +15,7 @@ use Strava;
 class CollectStravaActivitiesCommand extends Command
 {
 
-    const START_ACTIVITIES_EPOCH = 1672531200; // 01/01/2023 00:00:00
-
-    protected $signature   = 'command:collect_strava_activities';
+    protected $signature   = 'collect_strava_activities';
     protected $description = 'Coleta as atividades realizadas pelos colaboradores no Strava';
 
     /* @var UserStravaService */
@@ -39,10 +37,12 @@ class CollectStravaActivitiesCommand extends Command
     public function handle()
     {
 
+        $timeStampStart = Carbon::now('UTC')->setDay(1)->setMonth(1)->startOfDay();
         $users = $this->userStravaService->getActiveUsers();
         $now   = Carbon::now('UTC');
 
         if (empty($users)) {
+            $this->info('Nenhum usuário encontrado para atualização!');
             return;
         }
 
@@ -69,8 +69,13 @@ class CollectStravaActivitiesCommand extends Command
             }
 
             try {
+                $parseDate = Carbon::parse($user->admission_date)->startOfDay();
+                $startTime = $parseDate->timestamp < $timeStampStart->timestamp ?
+                    $timeStampStart->timestamp : $parseDate->timestamp;
+
+                $this->info($user->admission_date.' '.$parseDate->timestamp.' '.$timeStampStart->timestamp . ' - '. $startTime);
                 $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp,
-                    self::START_ACTIVITIES_EPOCH);
+                    $startTime);
             } catch (\Exception $exception) {
                 $this->userStravaService->update($user, ['active' => false]);
                 $this->info('Falha ao obter atividades do usuário ' . $user->id . '. Erro: ' . $exception->getMessage());

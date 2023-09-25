@@ -69,4 +69,9 @@ class UserService
 
         return $user;
     }
+
+    public function inactiveOldUsers(array $ids)
+    {
+        $this->userRepository->getUsersToInactive($ids)->update(['active' => false]);
+    }
 }

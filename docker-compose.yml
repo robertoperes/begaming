@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
-      - ./:/var/www
+      - ./:/var/www/
     networks:
       - begaming
 
@@ -42,7 +42,7 @@ services:
     ports:
       - 8000:80
     volumes:
-      - ./:/var/www
+      - ./:/var/www/
       - ./docker/config/nginx/:/etc/nginx/conf.d/
     networks:
       - begaming

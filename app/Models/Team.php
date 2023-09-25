@@ -18,7 +18,7 @@ class Team extends Model
         'name',
         'active',
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function users(): HasMany

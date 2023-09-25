@@ -13,7 +13,7 @@ use Illuminate\Console\Command;
 class CompanyTimePointCommand extends Command
 {
 
-    protected $signature   = 'command:company_time_point';
+    protected $signature   = 'company_time_point';
     protected $description = 'Gera os pontos de Tempo de Empresa';
 
     /* @var UserService */
