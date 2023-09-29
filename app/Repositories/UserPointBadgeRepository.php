@@ -90,6 +90,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                     badge_type.*, (SUM(IFNULL(user_point_badge.value,0)) + 
                     IFNULL((SELECT SUM(value) as total FROM user_point_badge_history WHERE 
                                         (user_point_badge_history.user_id =  ' . $user_id . ' AND 
+                                         user_point_badge_status_id != '.UserPointBadgeStatusEnum::DISABLED.' AND
                                          user_point_badge_history.badge_type_id = user_point_badge.badge_type_id)),0)
                     ) as total
                 FROM 
