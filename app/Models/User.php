@@ -25,6 +25,8 @@ class User extends Authenticatable
         'admission_date',
         'api_token',
         'admin',
+        'city_name',
+        'state_letter',
         'google_id',
         'google_avatar',
         'created_at',
