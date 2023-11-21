@@ -73,7 +73,6 @@ class CollectStravaActivitiesCommand extends Command
                 $startTime = $parseDate->timestamp < $timeStampStart->timestamp ?
                     $timeStampStart->timestamp : $parseDate->timestamp;
 
-                $this->info($user->admission_date.' '.$parseDate->timestamp.' '.$timeStampStart->timestamp . ' - '. $startTime);
                 $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp,
                     $startTime);
             } catch (\Exception $exception) {
