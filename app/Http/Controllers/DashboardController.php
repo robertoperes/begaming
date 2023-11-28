@@ -82,7 +82,7 @@ class DashboardController extends Controller
     {
         if(!Cache::has('ranking-points')){
             $data = new RankingUsersPointsBadgesResourceCollection($this->userPointBadgeService->rankingUsersPointsBadges());
-            Cache::put('ranking-points', json_encode($data), now()->addMinutes(30));
+            Cache::put('ranking-points', json_encode($data), now()->addMinutes(5));
         } else {
             $data = json_decode(Cache::get('ranking-points'), true);
         }
