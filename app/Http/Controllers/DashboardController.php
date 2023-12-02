@@ -80,12 +80,7 @@ class DashboardController extends Controller
 
     public function rankingUsersPointsBadges()
     {
-        if(!Cache::has('ranking-points')){
-            $data = new RankingUsersPointsBadgesResourceCollection($this->userPointBadgeService->rankingUsersPointsBadges());
-            Cache::put('ranking-points', json_encode($data), now()->addMinutes(5));
-        } else {
-            $data = json_decode(Cache::get('ranking-points'), true);
-        }
+        $data = new RankingUsersPointsBadgesResourceCollection($this->userPointBadgeService->rankingUsersPointsBadges());
         return Response::json($data, HttpResponse::HTTP_OK);
     }
 }
