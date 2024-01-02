@@ -120,7 +120,6 @@ class UserPointBadgeRepository extends RepositoryAbstract
               WHERE 
                   user_point_badge.user_point_badge_status_id != '.UserPointBadgeStatusEnum::DISABLED.' 
                     AND user_point_badge.badge_type_id NOT IN ('.BadgeTypeEnum::COMPANY_TIME.', '.BadgeTypeEnum::CULTURE.')
-                    AND user_point_badge.user_id = 1
                     AND YEAR(user_point_badge.event_date) < '.$year.'
               GROUP BY user_point_badge.user_id, user_point_badge.badge_type_id)
         ');
