@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 class ResetPointCommand extends Command
 {
 
-    protected $signature = 'reset_oint';
+    protected $signature = 'reset_point';
     protected $description = 'Reseta pontos';
 
     /* @var UserPointBadgeService */
