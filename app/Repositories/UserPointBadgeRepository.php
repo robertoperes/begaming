@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enuns\BadgeTypeEnum;
 use App\Enuns\UserPointBadgeStatusEnum;
 use App\Models\UserPointBadge;
 use Illuminate\Database\Eloquent\Model;
@@ -100,6 +101,28 @@ class UserPointBadgeRepository extends RepositoryAbstract
                             user_point_badge_status_id != '.UserPointBadgeStatusEnum::DISABLED.' 
                         ) 
                 GROUP BY badge_type.id ORDER BY badge_type.description;
+        ');
+    }
+
+    public function listUserPointsBadgesReset(int $year)
+    {
+        return DB::connection()->select('
+            SELECT user_point_badge.user_id,
+                 user_point_badge.badge_type_id,
+                 SUM(user_point_badge.value) as total,
+                 (SELECT SUM(value) as total
+                  FROM user_point_badge_history
+                  WHERE user_id = user_point_badge.user_id
+                    AND badge_type_id = user_point_badge.badge_type_id
+                  GROUP BY user_id)          as total_history
+              FROM 
+                  user_point_badge
+              WHERE 
+                  user_point_badge.user_point_badge_status_id != '.UserPointBadgeStatusEnum::DISABLED.' 
+                    AND user_point_badge.badge_type_id NOT IN ('.BadgeTypeEnum::COMPANY_TIME.', '.BadgeTypeEnum::CULTURE.')
+                    AND user_point_badge.user_id = 1
+                    AND YEAR(user_point_badge.event_date) < '.$year.'
+              GROUP BY user_point_badge.user_id, user_point_badge.badge_type_id)
         ');
     }
 }

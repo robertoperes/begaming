@@ -7,6 +7,7 @@ use App\Console\Commands\CompanyTimePointCommand;
 use App\Console\Commands\CreateBadgeCommand;
 use App\Console\Commands\CulturePointCommand;
 use App\Console\Commands\ImportUsersCommand;
+use App\Console\Commands\ResetPointCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -22,7 +23,8 @@ class Kernel extends ConsoleKernel
         CompanyTimePointCommand::class,
         CulturePointCommand::class,
         CreateBadgeCommand::class,
-        ImportUsersCommand::class
+        ImportUsersCommand::class,
+        ResetPointCommand::class
     ];
 
     /**
@@ -33,19 +35,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(CollectStravaActivitiesCommand::class)->cron('0 */2 * * *')
+        $schedule->command(CollectStravaActivitiesCommand::class)->cron('0 */2 * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CompanyTimePointCommand::class)->cron('0 5 * * *')
+        $schedule->command(CompanyTimePointCommand::class)->cron('0 5 * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CulturePointCommand::class)->cron('0 5 * * *')
+        $schedule->command(CulturePointCommand::class)->cron('0 5 * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CreateBadgeCommand::class)->cron('30 5 * * *')
+        $schedule->command(CreateBadgeCommand::class)->cron('30 5 * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(ImportUsersCommand::class)->cron('0 */2 * * *')
+        $schedule->command(ImportUsersCommand::class)->cron('0 */2 * * * *')
+            ->appendOutputTo(storage_path() . '/logs/schedule.log');
+
+        $schedule->command(ResetPointCommand::class)->cron('0 5 1 1 * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
     }
 

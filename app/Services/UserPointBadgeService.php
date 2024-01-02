@@ -77,4 +77,9 @@ class UserPointBadgeService
     {
         return $this->userPointBadgeRepository->listTotalUsersPointsBadges($user_id);
     }
+
+    public function listUserPointsBadgesReset(int $year)
+    {
+        return $this->userPointBadgeRepository->listUserPointsBadgesReset($year);
+    }
 }
