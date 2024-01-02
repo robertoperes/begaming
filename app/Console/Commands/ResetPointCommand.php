@@ -49,7 +49,7 @@ class ResetPointCommand extends Command
 
                 $value = ($point->total + ($point->total_history));
 
-                if ($value) {
+                if (!$value) {
                     continue;
                 }
 
@@ -62,7 +62,7 @@ class ResetPointCommand extends Command
                         'badge_type_id' => $point->badge_type_id,
                         'value'         => $value * -1,
                         'description'   => 'Resete de pontos anual',
-                        'created_at'    => $now->format('Y-01-01 H:i:s'),
+                        'created_at'    => $now->format('Y-01-01 03:00:00'),
                     ]);
 
                     $total++;
