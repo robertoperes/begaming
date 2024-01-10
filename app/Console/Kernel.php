@@ -35,22 +35,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(CollectStravaActivitiesCommand::class)->cron('0 */2 * * * *')
+        $schedule->command(CollectStravaActivitiesCommand::class)->cron('0 */2 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CompanyTimePointCommand::class)->cron('0 5 * * * *')
+        $schedule->command(CompanyTimePointCommand::class)->cron('0 5 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CulturePointCommand::class)->cron('0 5 * * * *')
+        $schedule->command(CulturePointCommand::class)->cron('0 5 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CreateBadgeCommand::class)->cron('30 5 * * * *')
+        $schedule->command(CreateBadgeCommand::class)->cron('30 5 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(ImportUsersCommand::class)->cron('0 */2 * * * *')
+        $schedule->command(ImportUsersCommand::class)->cron('0 */2 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(ResetPointCommand::class)->cron('0 5 1 1 * *')
+        $schedule->command(ResetPointCommand::class)->cron('0 5 1 1 *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
     }
 
