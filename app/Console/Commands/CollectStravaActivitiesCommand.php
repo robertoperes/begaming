@@ -111,6 +111,9 @@ class CollectStravaActivitiesCommand extends Command
                     $this->userStravaActivitService->create($data);
                 }
 
+                $event = $activitDate->format('Ym') == '202401' ? ' Campanha Janeiro Branco' : '';
+                $value = $activitDate->format('Ym') == '202401' ? 1 : 2;
+
                 try {
                     $point = $this->userPointBadgeService->findBadgeTypeDate($user->user_id, BadgeTypeEnum::WELL_BEING,
                         $activitDate->format('Y-m-d'));
@@ -120,8 +123,8 @@ class CollectStravaActivitiesCommand extends Command
                         'badge_type_id'              => BadgeTypeEnum::WELL_BEING,
                         'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
                         'input_user_id'              => $user->user_id,
-                        'value'                      => 1,
-                        'description'                => 'Atividade Strava',
+                        'value'                      => $value,
+                        'description'                => 'Atividade Strava'.$event,
                         'event_date'                 => $activitDate->format('Y-m-d H:i:s')
                     ]);
                 }
