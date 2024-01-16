@@ -112,7 +112,7 @@ class CollectStravaActivitiesCommand extends Command
                 }
 
                 $event = $activitDate->format('Ym') == '202401' ? ' Campanha Janeiro Branco' : '';
-                $value = $activitDate->format('Ym') == '202401' ? 1 : 2;
+                $value = $activitDate->format('Ym') == '202401' ? 2 : 1;
 
                 try {
                     $point = $this->userPointBadgeService->findBadgeTypeDate($user->user_id, BadgeTypeEnum::WELL_BEING,
