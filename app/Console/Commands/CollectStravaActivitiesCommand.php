@@ -116,7 +116,7 @@ class CollectStravaActivitiesCommand extends Command
 
                 try {
                     $point = $this->userPointBadgeService->findBadgeTypeDate($user->user_id, BadgeTypeEnum::WELL_BEING,
-                        $activitDate->format('Y-m-d 00:00:00'));
+                        $activitDate->format('Y-m-d'));
                 } catch (\Exception $exception) {
                     $this->userPointBadgeService->create([
                         'user_id'                    => $user->user_id,
@@ -125,7 +125,7 @@ class CollectStravaActivitiesCommand extends Command
                         'input_user_id'              => $user->user_id,
                         'value'                      => $value,
                         'description'                => 'Atividade Strava'.$event,
-                        'event_date'                 => $activitDate->format('Y-m-d H:i:s')
+                        'event_date'                 => $activitDate->format('Y-m-d 00:00:00')
                     ]);
                 }
             }
