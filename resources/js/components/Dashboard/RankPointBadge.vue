@@ -57,7 +57,7 @@ export default {
     },
     showUser(index, userId) {
 
-      if(this.admin) {
+      if(this.isAdmin) {
         return true;
       }
 
