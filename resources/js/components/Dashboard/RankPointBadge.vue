@@ -72,7 +72,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['user']),
+    ...mapGetters('user', ['user', 'isAdmin']),
   },
   async beforeMount() {
     await this.fetch();
