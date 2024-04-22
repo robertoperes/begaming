@@ -56,6 +56,11 @@ export default {
       return (userId === this.user.id)
     },
     showUser(index, userId) {
+
+      if(this.admin) {
+        return true;
+      }
+
       return (index < 10 || userId === this.user.id)
     },
     fetch() {
