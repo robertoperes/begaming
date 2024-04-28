@@ -34,6 +34,7 @@ class UserBadgeRepository extends RepositoryAbstract
     public function findAll(array $filter, string $orderKey = null, string $orderType = 'ASC'): Collection
     {
         $model = $this->createModel()
+            ->select('user_badge.*')
             ->join('user', 'user.id','=', 'user_badge.user_id')
             ->join('badge','badge.id', '=', 'user_badge.badge_id');
 
