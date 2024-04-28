@@ -17,9 +17,9 @@ class UserBadgeService
         $this->userBadgeRepository = app(UserBadgeRepository::class);
     }
 
-    public function findAll(array $filters = []): Collection
+    public function findAll(array $filters = [], $orderKey = 'user_badge.created_at', $order = 'ASC'): Collection
     {
-        return $this->userBadgeRepository->findAll($filters);
+        return $this->userBadgeRepository->findAll($filters, $orderKey, $order);
     }
 
     public function create(array $data): UserBadge

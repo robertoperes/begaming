@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\UserBadge;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class UserBadgeRepository extends RepositoryAbstract
@@ -29,4 +30,16 @@ class UserBadgeRepository extends RepositoryAbstract
             LIMIT 5');
     }
 
+
+    public function findAll(array $filter, string $orderKey = null, string $orderType = 'ASC'): Collection
+    {
+        $model = $this->createModel()
+            ->join('user', 'user.id','=', 'user_badge.user_id')
+            ->join('badge','badge.id', '=', 'user_badge.badge_id');
+
+        if ($orderKey) {
+            return $model->where($filter)->orderBy($orderKey, $orderType)->get();
+        }
+        return $model->where($filter)->get();
+    }
 }

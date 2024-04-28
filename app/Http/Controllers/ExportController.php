@@ -31,7 +31,7 @@ class ExportController extends Controller
 
         $columns = ['Nome', 'Badge','Time', 'Data'];
 
-        $listBadges = $this->userBadgeService->findAll([]);
+        $listBadges = $this->userBadgeService->findAll(['user.active' => true]);
         $list = (new UserBadgeResourceCollection($listBadges))->toArray($request);
 
         $callback = function () use ($list, $columns, $request) {
