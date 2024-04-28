@@ -29,7 +29,7 @@ class ExportController extends Controller
             , 'Pragma' => 'public'
         ];
 
-        $columns = ['Nome', 'Badge', 'Data'];
+        $columns = ['Nome', 'Badge','Time', 'Data'];
 
         $listBadges = $this->userBadgeService->findAll([]);
         $list = (new UserBadgeResourceCollection($listBadges))->toArray($request);

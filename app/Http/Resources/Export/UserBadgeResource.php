@@ -12,6 +12,7 @@ class UserBadgeResource extends JsonResource
         return [
             $this->user->name,
             $this->badge->name . ' - ' . $this->badge->classification->description,
+            $this->user->team->name,
             Carbon::parse($this->created_at,
                 'UTC')->timezone('America/Campo_Grande')->format
             ('d/m/Y'),
