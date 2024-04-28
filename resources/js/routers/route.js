@@ -9,7 +9,7 @@ import BadgeForm from "../components/Admin/Badge/BadgeForm";
 import PointBadgeForm from "../components/Admin/Point/PointBadgeForm";
 import UserForm from '../components/Admin/User/UserForm.vue';
 
-
+import exportApi from "../api/export";
 
 export default [
     {path: '/', component: Dashboard, name: 'home'},
@@ -54,4 +54,10 @@ export default [
     {path: '/admin/users/list', component: User, name: 'users'},
     {path: '/admin/users/:id(\\d+)', component: UserForm, name: 'userForm', props: true},
 
+    {path: '/admin/export-badges',
+        component: {
+            beforeRouteEnter(to, from, next) {
+                exportApi.badges('badges.csv');
+            }
+        }, name: "export-badges", props: false}
 ]

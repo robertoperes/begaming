@@ -48,9 +48,7 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
     Route::get('/rank-users-points-badges', 'DashboardController@rankingUsersPointsBadges');
 });
 
-//Route::prefix('dashboard')->group(function () {
-//    Route::get('/user-point-badge', 'DashboardController@listUserPointBadge');
-//    Route::get('/user-badge', 'DashboardController@listUserBadge');
-//    Route::get('/rank-badge-users', 'DashboardController@rankingBadgeUsers');
-//    Route::get('/rank-users-points-badges', 'DashboardController@rankingUsersPointsBadges');
-//});
+
+Route::prefix('export')->middleware('auth:api')->group(function () {
+    Route::get('/badges', 'ExportController@badges');
+});

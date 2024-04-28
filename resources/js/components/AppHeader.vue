@@ -34,6 +34,20 @@
           </div>
         </div>
 
+        <div class="btn-group" v-if="this.isAdmin">
+          <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false">
+            Relatórios
+          </button>
+          <div class="dropdown-menu">
+            <h6 class="dropdown-header">Badges</h6>
+            <router-link :to="{name:'export-badges'}" class="dropdown-item">
+              <i class="bi bi-award"></i> Badges
+            </router-link>
+          </div>
+        </div>
+
+
         <div class="btn-group">
           <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">
