@@ -24,7 +24,7 @@
                      :key="user.id"
                      v-if="showUser(index, user.id)">
                   <div class="col-2 p-0 text-center"><strong>#{{ index + 1 }}</strong></div>
-                  <div class="col-7 p-0" :title="user.name">{{ firstName(user.name) }}</div>
+                  <div class="col-7 p-0" :title="user.name + ' (' + user.team_name + ')'">{{ firstName(user.name) }}</div>
                   <div class="col-3 p-0 text-center">{{ user.total }}</div>
                 </div>
               </div>
@@ -113,6 +113,8 @@ div.ranking {
 div.card-badge {
   width: 220px;
   min-width: 220px;
+  max-height: 400px;
+  overflow-y: scroll;
 }
 
 div.card-ranking {

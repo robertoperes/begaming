@@ -45,7 +45,10 @@
               <i class="bi bi-award"></i> Badges
             </router-link>
             <router-link :to="{name:'export-user-point-badges'}" class="dropdown-item">
-              <i class="bi bi-award"></i> Pontos
+              <i class="bi bi-person-lines-fill"></i> Pontos
+            </router-link>
+            <router-link :to="{name:'export-rank'}" class="dropdown-item">
+              <i class="bi bi-bookmarks"></i> Rank
             </router-link>
           </div>
         </div>

@@ -51,6 +51,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                    user.name as user_name,
                    DATE_FORMAT(user.admission_date, "%Y%m%d") as admission_date,
                    user.google_avatar as user_google_avatar,
+                   team.name as team_name,
                    badge.id as badge_id,
                    badge.name as badge_name,
                    badge.icon as badge_icon,
@@ -63,6 +64,7 @@ class UserPointBadgeRepository extends RepositoryAbstract
                    IF(user_badges.badge_id IS NOT NULL, true, false) as has_user_badge
                 FROM
                     user
+                INNER JOIN team ON (team.id = user.team_id)
                 INNER JOIN badge ON (badge.active = 1)
                 INNER JOIN badge_type ON (badge.badge_type_id = badge_type.id)
                 INNER JOIN badge_classification ON (badge.badge_classification_id = badge_classification.id)

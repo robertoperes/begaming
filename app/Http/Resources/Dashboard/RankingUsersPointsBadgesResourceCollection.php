@@ -43,7 +43,8 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
                 'name'           => $item->user_name,
                 'google_avatar'  => $item->user_google_avatar,
                 'total'          => (int)$item->total,
-                'admission_date' => $item->admission_date
+                'admission_date' => $item->admission_date,
+                'team_name'      => $item->team_name,
             ];
         }
 
