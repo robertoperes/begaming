@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Enuns\BadgeTypeEnum;
 use App\Enuns\UserPointBadgeStatusEnum;
 use App\Models\UserPointBadge;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -22,6 +24,24 @@ class UserPointBadgeRepository extends RepositoryAbstract
                 $date);
         return
             $builder->first();
+    }
+
+    public function export(): Collection
+    {
+
+        $dateStart = Carbon::now()->timezone('America/Campo_Grande')->startOfYear()->startOfDay();
+        $dateEnd = Carbon::now()->timezone('America/Campo_Grande')->endOfYear()->endOfDay();
+
+        $model = $this->createModel()
+            ->select('user_point_badge.*')
+            ->join('user', 'user.id','=', 'user_point_badge.user_id')
+            ->join('badge_type','badge_type.id', '=', 'user_point_badge.badge_type_id');
+
+        $model->where('user.active', '=', true);
+        $model->whereBetween('user_point_badge.event_date', [$dateStart, $dateEnd]);
+        $model->orderBy('event_date', 'ASC');
+
+        return $model->get();
     }
 
     public function rankingUsersPointsBadges()

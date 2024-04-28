@@ -10,4 +10,11 @@ export default {
             saveAs(response.data, filename);
         })
     },
+    userPointBadge(filename) {
+        return axios.get(urls.EXPORT_USER_POINT_BADGES, {
+            responseType: 'blob'
+        }).then(response => {
+            saveAs(response.data, filename);
+        })
+    },
 }

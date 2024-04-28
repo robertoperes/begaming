@@ -25,7 +25,8 @@ const urls = {
     DASHBOARD_BADGE: `${BASE_URL}/dashboard/user-badge`,
     DASHBOARD_BADGE_USERS_RANK: `${BASE_URL}/dashboard/rank-badge-users`,
 
-    EXPORT_BADGES: `${BASE_URL}/export/badges`,
+    EXPORT_BADGES: `${BASE_URL}/export/badge`,
+    EXPORT_USER_POINT_BADGES: `${BASE_URL}/export/user-point-badge`,
 
 }
 

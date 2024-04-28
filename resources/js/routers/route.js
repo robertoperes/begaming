@@ -57,7 +57,15 @@ export default [
     {path: '/admin/export-badges',
         component: {
             beforeRouteEnter(to, from, next) {
-                exportApi.badges('badges.csv');
+                exportApi.badges('lista-badges.csv');
             }
-        }, name: "export-badges", props: false}
+        }, name: "export-badges", props: false},
+
+    {path: '/admin/export-badges',
+        component: {
+            beforeRouteEnter(to, from, next) {
+                exportApi.userPointBadge('lista-pontos.csv');
+            }
+        }, name: "export-user-point-badges", props: false},
 ]
+

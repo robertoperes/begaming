@@ -50,5 +50,7 @@ Route::prefix('dashboard')->middleware('auth:api')->group(function () {
 
 
 Route::prefix('export')->middleware('auth:api')->group(function () {
-    Route::get('/badges', 'ExportController@badges');
+    Route::get('/badge', 'ExportController@badges');
+    Route::get('/user-point-badge', 'ExportController@userPointsBadge');
 });
+

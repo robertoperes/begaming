@@ -68,6 +68,11 @@ class UserPointBadgeService
         return $this->userPointBadgeRepository->findAll($filters);
     }
 
+    public function export()
+    {
+        return $this->userPointBadgeRepository->export();
+    }
+
     public function rankingUsersPointsBadges()
     {
         return $this->userPointBadgeRepository->rankingUsersPointsBadges();
