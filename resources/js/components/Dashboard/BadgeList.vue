@@ -8,7 +8,7 @@
       <div class="card-body p-1">
         <figure class="p-1 d-inline" v-for="badge in this.badges" :key="badge.id"
                 :title="badge.name + ' - ' + badge.classification.description">
-          <img :src="badge.icon" :width="40"
+          <img :src="badge.icon" :width="50"
                :alt=" badge.name + ' - ' + badge.classification.description "/>
         </figure>
       </div>

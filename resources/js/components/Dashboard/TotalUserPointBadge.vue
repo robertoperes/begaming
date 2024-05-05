@@ -7,7 +7,7 @@
       <div v-for="badgeType in this.data" :key="'badge-type-' + badgeType.id" class="shadow-sm m-1 item rounded">
         <figure class="p-1 d-inline"
                 :title="badgeType.description">
-          <img :src="badgeType.icon" :width="40"
+          <img :src="badgeType.icon" :width="35"
                :alt="badgeType.description"/>
         </figure>
         <span class="badge">{{ badgeType.total }}</span>
@@ -44,7 +44,7 @@ export default {
 
 div.item {
   width: 100px;
-  height: 45px;
+  height: 38px;
 }
 
 </style>

@@ -154,6 +154,7 @@ div.card-ranking {
 
 div.me {
   color: #1d68a7;
+  font-weight: bold;
 }
 
 div.user-ranking {
