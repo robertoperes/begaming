@@ -1,8 +1,21 @@
 <template>
   <div class="card card-ranking mt-1">
     <div class="card-header">
-      Corrida dos badges
+      <div class="row">
+        <div class="col-8">
+          Corrida dos badges
+        </div>
+        <div class="col-4">
+          <select name="teams" class="form-control m-0" :value="this.team" @change="onChangeTeam($event)">
+            <option value="">Todos</option>
+            <option :value="team" v-for="team in this.teams">
+              {{ team }}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
+
     <div class="card-body p-1">
       <div class="ranking d-flex mt-1">
         <div class="card card-badge shadow-sm d-inline-flex mr-1" v-for="badge in this.data" :key="'badge-' + badge.id">
@@ -22,7 +35,7 @@
               <div class="col-12">
                 <div :class="'row user-ranking ' + (me(user.id) && 'me')" v-for="(user, index) in badge.users"
                      :key="user.id"
-                     v-if="showUser(index, user.id)">
+                     v-if="showUser(index, user.id) && (team === '' || team === user.team_name)">
                   <div class="col-2 p-0 text-center"><strong>#{{ index + 1 }}</strong></div>
                   <div class="col-7 p-0" :title="user.name + ' (' + user.team_name + ')'">{{ firstName(user.name) }}</div>
                   <div class="col-3 p-0 text-center">{{ user.total }}</div>
@@ -44,7 +57,9 @@ import {mapGetters} from "vuex";
 export default {
   data() {
     return {
-      data: []
+      data: [],
+      team: "",
+      teams: []
     };
   },
   methods: {
@@ -69,6 +84,21 @@ export default {
       }).catch(({response: {data}}) => {
         this.data = [];
       });
+    },
+    fetchTeams(){
+      let teams = [];
+      this.data.forEach((badge) => {
+        badge.users.forEach((user) => {
+          if (teams.indexOf(user.team_name) === -1) {
+            teams.push(user.team_name);
+          }
+        })
+      })
+      this.teams = teams;
+    },
+    onChangeTeam(event){
+      this.team = event.target.value;
+      console.log(this.team)
     }
   },
   computed: {
@@ -76,6 +106,7 @@ export default {
   },
   async beforeMount() {
     await this.fetch();
+    await this.fetchTeams();
   }
 }
 </script>
@@ -132,6 +163,10 @@ div.user-ranking {
 img.badge-img {
   height: 50px;
   width: auto;
+}
+
+select {
+  font-size: 10px;
 }
 
 </style>
