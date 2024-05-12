@@ -14,10 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/google-redirect', 'Auth\LoginController@redirectToGoogleProvider')->name('login-google');
-Route::get('/google-callback', 'Auth\LoginController@handleGoogleProviderCallback')->name('app-strava');
-Route::get('/strava-redirect', 'StravaController@redirectToStravaProvider')->name('app-strava');
-Route::get('/strava-callback', 'StravaController@handleStravaProviderCallback');
+Route::get('/google-redirect', 'Auth\LoginController@redirectToGoogleProvider')
+    ->name('login-google');
+Route::get('/google-callback', 'Auth\LoginController@handleGoogleProviderCallback')
+    ->name('app-strava');
+Route::get('/strava-redirect', 'StravaController@redirectToStravaProvider')
+    ->name('app-strava');
+Route::get('/strava-callback', 'StravaController@providerCallback')
+    ->name('app-strava-callback');
+Route::get('/strava-subscribe-callback', 'StravaController@subscribeCallback')
+    ->name('app-strava-subscribe-callback');
+Route::post('/strava-subscribe-callback', 'StravaController@inputSubscribeCallback')
+    ->name('app-strava-input-subscribe-callback');
 
 Route::prefix('auth')->group(function () {
     Route::get('/login', function () {

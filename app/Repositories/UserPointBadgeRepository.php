@@ -100,7 +100,9 @@ class UserPointBadgeRepository extends RepositoryAbstract
                                              AND user_badges.badge_classification_id = badge_classification.id
                         )
             WHERE
-                user.active = 1 AND user.id NOT IN(70, 71, 72) AND badge.active = 1
+                user.active = 1 AND 
+                user.id NOT IN(70, 71, 72) AND 
+                badge.active = 1
             GROUP BY user.id, badge.id
             ORDER BY badge.badge_type_id, badge.badge_classification_id;
         ');

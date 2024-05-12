@@ -36,9 +36,14 @@
                 <div :class="'row user-ranking ' + (me(user.id) && 'me')" v-for="(user, index) in badge.users"
                      :key="user.id"
                      v-if="showUser(index, user.id) && (team === '' || team === user.team_name)">
-                  <div class="col-2 p-0 text-center"><strong>#{{ index + 1 }}</strong></div>
+                  <div  class="col-1 p-0 text-center">
+                    <i :class="'bi bi-caret-' + user.status + '-fill'"></i>
+                  </div>
+                  <div class="col-2 p-0 text-center">
+                    <strong>#{{ index + 1 }}</strong>
+                  </div>
                   <div class="col-7 p-0" :title="user.name + ' (' + user.team_name + ')'">{{ firstName(user.name) }}</div>
-                  <div class="col-3 p-0 text-center">{{ user.total }}</div>
+                  <div class="col-2 p-0 text-center">{{ user.total }}</div>
                 </div>
               </div>
             </div>
@@ -142,8 +147,7 @@ div.ranking {
 }
 
 div.card-badge {
-  width: 220px;
-  min-width: 220px;
+  min-width: 250px;
   max-height: 400px;
   overflow-y: scroll;
 }
@@ -170,4 +174,11 @@ select {
   font-size: 10px;
 }
 
+.bi-caret-up-fill {
+  color: #7fb707;
+}
+
+.bi-caret-down-fill {
+  color: #f23737;
+}
 </style>

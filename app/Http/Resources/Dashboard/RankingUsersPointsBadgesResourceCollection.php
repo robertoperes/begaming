@@ -3,13 +3,17 @@
 namespace App\Http\Resources\Dashboard;
 
 use App\Http\Resources\ResourceCollectionAbstract;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstract
 {
 
     public function toArray($request)
     {
-        $data = [];
+        $key        = 'cache-dashboard-' . Carbon::now()->startOfDay()->subDay()->format('Ymd');
+        $data       = [];
+        $cacheData  = json_decode(Cache::get($key, '{}'), true);
 
         $uniqueBadgeType = [];
 
@@ -45,6 +49,7 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
                 'total'          => (int)$item->total,
                 'admission_date' => $item->admission_date,
                 'team_name'      => $item->team_name,
+                'status'         => null,
             ];
         }
 
@@ -56,6 +61,33 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
                 array_column($item['users'], 'total'), SORT_DESC,
                 array_column($item['users'], 'admission_date'), SORT_ASC,
                 $item['users']);
+        }
+
+        if(is_array($cacheData)) {
+            foreach ($data as $keyBadge => &$item) {
+
+                if (empty($item['users'])) {
+                    continue;
+                }
+
+                foreach ($item['users'] as $rank => &$user) {
+                    if(
+                        array_key_exists($keyBadge, $cacheData) &&
+                        array_key_exists($user['id'], $cacheData[$keyBadge]['rank'])
+                    ) {
+                        $cacheRank  = $cacheData[$keyBadge]['rank'][$user['id']];
+                        $status     = '';
+
+                        if($cacheRank > $rank ) {
+                            $status = 'up';
+                        } elseif($cacheRank < $rank ) {
+                            $status = 'down';
+                        }
+
+                        $data[$keyBadge]['users'][$rank]['status'] = $status;
+                    }
+                }
+            }
         }
 
         return [

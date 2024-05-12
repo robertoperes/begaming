@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Providers\RouteServiceProvider;
-use App\Services\UserService;
 use App\Services\UserStravaService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Response;
 use Strava;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class StravaController extends Controller
 {
@@ -22,12 +24,12 @@ class StravaController extends Controller
         $this->userStravaService = $userStravaService;
     }
 
-    public function redirectToStravaProvider()
+    public function redirectToStravaProvider(): JsonResponse
     {
         return Strava::authenticate($scope = 'read_all,profile:read_all,activity:read_all');
     }
 
-    public function handleStravaProviderCallback(Request $request)
+    public function providerCallback(Request $request)
     {
 
         $token   = Strava::token($request->code);
@@ -59,6 +61,19 @@ class StravaController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    public function subscribeCallback(Request $request): JsonResponse
+    {
+        $data = [
+            'hub.challenge' => $request['hub_challenge'] ?? null,
+        ];
+        return Response::json($data, HttpResponse::HTTP_OK);
+    }
+
+    public function inputSubscribeCallback(Request $request): JsonResponse
+    {
+        return Response::json([], HttpResponse::HTTP_OK);
     }
 
 }

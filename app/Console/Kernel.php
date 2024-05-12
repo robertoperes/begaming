@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CacheDashboardCommand;
 use App\Console\Commands\CollectStravaActivitiesCommand;
 use App\Console\Commands\CompanyTimePointCommand;
 use App\Console\Commands\CreateBadgeCommand;
@@ -24,7 +25,8 @@ class Kernel extends ConsoleKernel
         CulturePointCommand::class,
         CreateBadgeCommand::class,
         ImportUsersCommand::class,
-        ResetPointCommand::class
+        ResetPointCommand::class,
+        CacheDashboardCommand::class
     ];
 
     /**
@@ -51,6 +53,11 @@ class Kernel extends ConsoleKernel
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
         $schedule->command(ResetPointCommand::class)->cron('0 5 1 1 *')
+            ->appendOutputTo(storage_path() . '/logs/schedule.log');
+
+        $schedule->command(ImportUsersCommand::class)
+            ->timezone('America/Sao_Paulo')
+            ->cron('55 * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
     }
 
