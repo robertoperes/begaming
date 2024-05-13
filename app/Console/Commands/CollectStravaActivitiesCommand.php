@@ -49,32 +49,11 @@ class CollectStravaActivitiesCommand extends Command
         foreach ($users as $user) {
 
             try {
-                if (strtotime(Carbon::now()) > $user->expires_at) {
-                    $refresh = Strava::refreshToken($user->refresh_token);
-                    $this->userStravaService->update($user, [
-                        'access_token'  => $refresh->access_token,
-                        'refresh_token' => $refresh->refresh_token
-                    ]);
-                    $user->access_token  = $refresh->access_token;
-                    $user->refresh_token = $refresh->refresh_token;
-                }
-            } catch (\Exception $exception) {
-                $this->userStravaService->update($user, ['active' => false]);
-                $this->info('Falha ao renovar token do usuário ' . $user->id . '. Erro: ' . $exception->getMessage());
-                continue;
-            } catch (\Error $error) {
-                $this->userStravaService->update($user, ['active' => false]);
-                $this->info('Falha ao renovar token do usuário ' . $user->id . '. Erro: ' . $error->getMessage());
-                continue;
-            }
-
-            try {
                 $parseDate = Carbon::parse($user->admission_date)->startOfDay();
                 $startTime = $parseDate->timestamp < $timeStampStart->timestamp ?
                     $timeStampStart->timestamp : $parseDate->timestamp;
 
-                $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp,
-                    $startTime);
+                $activities = Strava::activities($user->access_token, 1, 500, $now->timestamp, $startTime);
             } catch (\Exception $exception) {
                 $this->userStravaService->update($user, ['active' => false]);
                 $this->info('Falha ao obter atividades do usuário ' . $user->id . '. Erro: ' . $exception->getMessage());
