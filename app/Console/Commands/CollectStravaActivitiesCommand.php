@@ -53,7 +53,7 @@ class CollectStravaActivitiesCommand extends Command
                 $startTime = $parseDate->timestamp < $timeStampStart->timestamp ?
                     $timeStampStart->timestamp : $parseDate->timestamp;
 
-                $activities = Strava::activities($user->access_token, 1, 500, $now->timestamp, $startTime);
+                $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp, $startTime);
             } catch (\Exception $exception) {
                 $this->userStravaService->update($user, ['active' => false]);
                 $this->info('Falha ao obter atividades do usuário ' . $user->id . '. Erro: ' . $exception->getMessage());
