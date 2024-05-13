@@ -24,7 +24,7 @@ class StravaController extends Controller
         $this->userStravaService = $userStravaService;
     }
 
-    public function redirectToStravaProvider(): JsonResponse
+    public function redirectToStravaProvider()
     {
         return Strava::authenticate($scope = 'read_all,profile:read_all,activity:read_all');
     }
