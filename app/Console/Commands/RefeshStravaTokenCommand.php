@@ -31,27 +31,14 @@ class RefeshStravaTokenCommand extends Command
 
             try {
 
-                $refresh = Strava::refreshToken($user->refresh_token);
-
-                if($refresh->access_token != $user->access_token) {
+                if (strtotime(Carbon::now()) >= $user->expires_at) {
+                    $refresh = Strava::refreshToken($user->refresh_token);
                     $this->userStravaService->update($user, [
-                        'active'  => false,
-                        'updated_at' => Carbon::now()->toDateTimeString()
-                    ]);
-
-                    $this->userStravaService->create([
-                        'user_id'       => $user->user->id,
-                        'athlete_id'    => $user->athlete_id,
                         'access_token'  => $refresh->access_token,
-                        'refresh_token' => $refresh->refresh_token,
-                        'expires_at' => Carbon::parse($refresh->expires_at)->toDateTimeString(),
-                        'created_at' => Carbon::now()->toDateTimeString()
+                        'refresh_token' => $refresh->refresh_token
                     ]);
-                } else {
-                    $this->userStravaService->update($user, [
-                        'expires_at' => Carbon::parse($refresh->expires_at)->toDateTimeString(),
-                        'updated_at' => Carbon::now()->toDateTimeString()
-                    ]);
+                    $user->access_token  = $refresh->access_token;
+                    $user->refresh_token = $refresh->refresh_token;
                 }
 
                 $this->info('Token atualizado para usuário '. $user->user->name);
