@@ -37,8 +37,6 @@ class RefeshStravaTokenCommand extends Command
                         'access_token'  => $refresh->access_token,
                         'refresh_token' => $refresh->refresh_token
                     ]);
-                    $user->access_token  = $refresh->access_token;
-                    $user->refresh_token = $refresh->refresh_token;
                     $this->info('Token atualizado para usuário '. $user->user->name);
                 }
 
