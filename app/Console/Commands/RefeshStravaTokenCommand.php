@@ -48,11 +48,6 @@ class RefeshStravaTokenCommand extends Command
                             'access_token'  => $refresh->access_token,
                             'refresh_token' => $refresh->refresh_token
                         ]);
-                    } else {
-                        $this->userStravaService->update($user,[
-                            'expires_at' => Carbon::parse($refresh->expires_at)->toDateTimeString(),
-                            'updated_at' => Carbon::now()->toDateTimeString(),
-                        ]);
                     }
 
                     $this->info('Token atualizado para usuário '. $user->user->name);
