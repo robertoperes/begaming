@@ -21,7 +21,8 @@ class UserStrava extends Model
         'refresh_token',
         'expires_at',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'last_fetch_at'
     ];
 
     public function user(): HasOne

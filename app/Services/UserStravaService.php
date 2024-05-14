@@ -50,4 +50,9 @@ class UserStravaService
     {
         return $this->userStravaRepository->getActiveUsers()->get();
     }
+
+    public function getExpiredUsers()
+    {
+        return $this->userStravaRepository->getExpiredUsers()->get();
+    }
 }

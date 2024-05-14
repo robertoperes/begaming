@@ -25,7 +25,7 @@ class RefeshStravaTokenCommand extends Command
     public function handle()
     {
 
-        $userActives    = $this->userStravaService->getActiveUsers();
+        $userActives    = $this->userStravaService->getExpiredUsers();
         $nowTimeStamp   = Carbon::now()->timestamp;
 
         foreach ($userActives as $user) {
