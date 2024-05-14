@@ -36,17 +36,25 @@ class RefeshStravaTokenCommand extends Command
 
                 if ($expiresTimeStamp < $nowTimeStamp) {
                     $refresh = Strava::refreshToken($user->refresh_token);
-                    $this->userStravaService->update($user,['active' => false]);
-                    $this->userStravaService->create([
-                        'user_id' => $user->user->id,
-                        'active' => true,
-                        'expires_at' => Carbon::parse($user->expires_at)->toDateTimeString(),
-                        'athlete_id' => $user->athlete_id,
-                        'last_fetch_at' => $user->last_fetch_at,
-                        'created_at' => Carbon::now()->toDateTimeString(),
-                        'access_token'  => $refresh->access_token,
-                        'refresh_token' => $refresh->refresh_token
-                    ]);
+                    if($refresh->access_token !== $user->access_token) {
+                        $this->userStravaService->update($user,['active' => false]);
+                        $this->userStravaService->create([
+                            'user_id' => $user->user->id,
+                            'active' => true,
+                            'expires_at' => Carbon::parse($refresh->expires_at)->toDateTimeString(),
+                            'athlete_id' => $user->athlete_id,
+                            'last_fetch_at' => $user->last_fetch_at,
+                            'created_at' => Carbon::now()->toDateTimeString(),
+                            'access_token'  => $refresh->access_token,
+                            'refresh_token' => $refresh->refresh_token
+                        ]);
+                    } else {
+                        $this->userStravaService->update($user,[
+                            'expires_at' => Carbon::parse($refresh->expires_at)->toDateTimeString(),
+                            'updated_at' => Carbon::now()->toDateTimeString(),
+                        ]);
+                    }
+
                     $this->info('Token atualizado para usuário '. $user->user->name);
                 }
 
