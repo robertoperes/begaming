@@ -42,6 +42,7 @@ class RefeshStravaTokenCommand extends Command
                         'active' => true,
                         'expires_at' => Carbon::parse($user->expires_at)->toDateTimeString(),
                         'athlete_id' => $user->athlete_id,
+                        'last_fetch_at' => $user->last_fetch_at,
                         'created_at' => Carbon::now()->toDateTimeString(),
                         'access_token'  => $refresh->access_token,
                         'refresh_token' => $refresh->refresh_token
