@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Providers\RouteServiceProvider;
 use App\Services\UserStravaService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Strava;
 use Carbon\Carbon;
@@ -73,6 +74,10 @@ class StravaController extends Controller
 
     public function inputSubscribeCallback(Request $request): JsonResponse
     {
+
+
+
+
         return Response::json([], HttpResponse::HTTP_OK);
     }
 

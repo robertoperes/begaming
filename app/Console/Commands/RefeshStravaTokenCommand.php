@@ -36,7 +36,12 @@ class RefeshStravaTokenCommand extends Command
 
                 if ($expiresTimeStamp < $nowTimeStamp) {
                     $refresh = Strava::refreshToken($user->refresh_token);
-                    $this->userStravaService->update($user, [
+                    $this->userStravaService->update($user,['active' => false]);
+                    $this->userStravaService->create([
+                        'user_id' => $user->user->id,
+                        'active' => true,
+                        'athlete_id' => $user->athlete_id,
+                        'created_at' => Carbon::now()->toDateTimeString(),
                         'access_token'  => $refresh->access_token,
                         'refresh_token' => $refresh->refresh_token
                     ]);
