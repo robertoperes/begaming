@@ -31,6 +31,17 @@ class UserStravaService
         return $userStrava;
     }
 
+    public function findBy(string $key, string $value): UserStrava
+    {
+        $userStrava = $this->userStravaRepository->findBy($key, $value)->first();
+
+        if (!($userStrava instanceof UserStrava)) {
+            throw new \Exception('Usuário não cadastrado');
+        }
+
+        return $userStrava;
+    }
+
     public function create(array $data): UserStrava
     {
         return $this->userStravaRepository->create($data);

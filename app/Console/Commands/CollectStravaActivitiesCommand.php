@@ -4,11 +4,11 @@ namespace App\Console\Commands;
 
 use App\Enuns\BadgeTypeEnum;
 use App\Enuns\UserPointBadgeStatusEnum;
-use App\Models\UserStravaActivit;
 use App\Services\UserPointBadgeService;
 use App\Services\UserStravaActivitService;
 use App\Services\UserStravaService;
 use Carbon\Carbon;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
 use Strava;
 
@@ -48,25 +48,53 @@ class CollectStravaActivitiesCommand extends Command
 
         foreach ($users as $user) {
 
+            $this->info('Sincronizando '.$user->user->name);
             try {
                 $parseDate = Carbon::parse($user->admission_date)->startOfDay();
                 $startTime = $parseDate->timestamp < $timeStampStart->timestamp ?
                     $timeStampStart->timestamp : $parseDate->timestamp;
 
-                $activities = Strava::activities($user->access_token, 1, 100, $now->timestamp, $startTime);
+                $page = 1;
+                $allActivities = [];
+
+                //do {
+
+                    $this->info('Buscando page '.$page);
+                    $allActivities = Strava::activities($user->access_token, 1, 100, $now->timestamp, $startTime);
+                    $page++;
+
+                    //foreach ($activities as $activit) {
+                    //    $allActivities[] = $activit;
+                    //}
+
+                //} while (count($activities));
+
+            } catch (ClientException $exception) {
+                if($exception->getResponse()->getStatusCode() == 429) {
+                    $this->warn('Too Many Requests');
+                    break;
+                } else {
+                    $this->error($exception->getMessage());
+                    $this->error($exception->getTraceAsString());
+                    continue;
+                }
+
             } catch (\Exception $exception) {
-                $this->info('Falha ao obter atividades do usuário ' . $user->id . '. Erro: ' . $exception->getMessage());
-                continue;
-            } catch (\Error $error) {
-                $this->info('Falha ao obter atividades do usuário ' . $user->id . '. Erro: ' . $error->getMessage());
-                continue;
-            }
-
-            if (empty($activities)) {
+                $this->info('Falha ao obter atividades do usuário ' . $user->user->name);
+                $this->error($exception->getMessage());
+                $this->error($exception->getTraceAsString());
                 continue;
             }
 
-            foreach ($activities as $activit) {
+            $this->userStravaService->update($user, [
+                'last_fetch_at' => Carbon::now()->toDateTimeString()
+            ]);
+
+            if (empty($allActivities)) {
+                continue;
+            }
+
+            foreach ($allActivities as $activit) {
 
                 $activitDate = Carbon::parse($activit->start_date_local,
                     $activit->timezone);

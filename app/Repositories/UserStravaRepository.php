@@ -17,16 +17,16 @@ class UserStravaRepository extends RepositoryAbstract
             'user.admission_date',
             'user_strava.*'
         ])->join('user', 'user.id', '=', 'user_strava.user_id')
-            ->where('user_strava.last_fetch_at','<=', Carbon::now()->subHour()->toDateTimeString())
             ->where('user_strava.active', '=', true)
             ->where('user.active', '=', true);
     }
 
     public function getExpiredUsers()
     {
-        return $this->createModel()->select(['*'])
+        return $this->createModel()->select(['user_strava.*'])
             ->join('user', 'user.id', '=', 'user_strava.user_id')
             ->where('user.active', '=', true)
+            ->where('user_strava.active', '=', true)
             ->orderBy('user_strava.created_at', 'DESC')
             ->groupBy('user_strava.user_id');
     }
