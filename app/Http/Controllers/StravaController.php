@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Providers\RouteServiceProvider;
+use App\Services\UserPointBadgeService;
+use App\Services\UserStravaActivitService;
 use App\Services\UserStravaService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Strava;
@@ -15,14 +18,26 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 class StravaController extends Controller
 {
 
-    /* @var UserStravaService */
+    /** @var UserStravaService $userStravaService */
     protected $userStravaService;
+
+    /** @var UserStravaActivitService $userStravaActivitService */
+    protected $userStravaActivitService;
+
+    /** @var UserPointBadgeService $userPointBadgeService */
+    protected $userPointBadgeService;
 
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    public function __construct(UserStravaService $userStravaService)
+    public function __construct(
+        UserStravaService $userStravaService,
+        UserStravaActivitService $userStravaActivitService,
+        UserPointBadgeService $userPointBadgeService
+    )
     {
         $this->userStravaService = $userStravaService;
+        $this->userStravaActivitService = $userStravaActivitService;
+        $this->userPointBadgeService = $userPointBadgeService;
     }
 
     public function redirectToStravaProvider()
@@ -75,9 +90,23 @@ class StravaController extends Controller
     public function inputSubscribeCallback(Request $request): JsonResponse
     {
 
+        try {
+            $data = $request->all();
+            if($request->get('object_type') == 'activity') {
+                $userStrava = $this->userStravaService->findActiveTokenBy('athlete_id', $data['owner_id']);
+                $activity   = Strava::activity($userStrava->access_token, $data['object_id']);
+                DB::beginTransaction();
+                $this->userStravaActivitService->createActivity($userStrava, $activity);
+                $this->userPointBadgeService->createWellBeingPoint($userStrava, $activity);
+                DB::commit();
+            }
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage(), $exception->getTrace());
+            return Response::json([
+                'message' => 'Falha atualização atividade do usuário',
+            ], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
 
-
-
+        }
         return Response::json([], HttpResponse::HTTP_OK);
     }
 

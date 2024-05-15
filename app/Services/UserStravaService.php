@@ -31,6 +31,19 @@ class UserStravaService
         return $userStrava;
     }
 
+    public function findActiveTokenBy(string $key, string $value): UserStrava
+    {
+        $userStrava = $this->userStravaRepository
+            ->findBy($key, $value)
+            ->where('active', true)
+            ->first();
+
+        if (!($userStrava instanceof UserStrava)) {
+            throw new \Exception('Usuário não cadastrado');
+        }
+
+        return $userStrava;
+    }
     public function findBy(string $key, string $value): UserStrava
     {
         $userStrava = $this->userStravaRepository->findBy($key, $value)->first();

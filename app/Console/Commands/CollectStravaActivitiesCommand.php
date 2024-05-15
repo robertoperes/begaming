@@ -10,6 +10,7 @@ use App\Services\UserStravaService;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Strava;
 
 class CollectStravaActivitiesCommand extends Command
@@ -40,34 +41,35 @@ class CollectStravaActivitiesCommand extends Command
         $timeStampStart = Carbon::now('UTC')->setDay(1)->setMonth(1)->startOfDay();
         $users = $this->userStravaService->getActiveUsers();
         $now   = Carbon::now('UTC');
+        $perPage = 100;
 
         if (empty($users)) {
             $this->info('Nenhum usuário encontrado para atualização!');
             return;
         }
 
-        foreach ($users as $user) {
+        foreach ($users as $userStrava) {
 
-            $this->info('Sincronizando '.$user->user->name);
+            $this->info('Sincronizando atividades '.$userStrava->user->name);
             try {
-                $parseDate = Carbon::parse($user->admission_date)->startOfDay();
+                $parseDate = Carbon::parse($userStrava->admission_date)->startOfDay();
                 $startTime = $parseDate->timestamp < $timeStampStart->timestamp ?
                     $timeStampStart->timestamp : $parseDate->timestamp;
 
                 $page = 1;
                 $allActivities = [];
 
-                //do {
+                do {
 
-                    $this->info('Buscando page '.$page);
-                    $allActivities = Strava::activities($user->access_token, 1, 100, $now->timestamp, $startTime);
+                    $activities = Strava::activities($userStrava->access_token, $page, $perPage, $now->timestamp, $startTime);
                     $page++;
 
-                    //foreach ($activities as $activit) {
-                    //    $allActivities[] = $activit;
-                    //}
+                    foreach ($activities as $activity) {
+                        $allActivities[] = $activity;
+                    }
 
-                //} while (count($activities));
+                    $total = count($activities);
+                } while ($total === $perPage);
 
             } catch (ClientException $exception) {
                 if($exception->getResponse()->getStatusCode() == 429) {
@@ -80,13 +82,13 @@ class CollectStravaActivitiesCommand extends Command
                 }
 
             } catch (\Exception $exception) {
-                $this->info('Falha ao obter atividades do usuário ' . $user->user->name);
+                $this->info('Falha ao obter atividades do usuário ' . $userStrava->user->name);
                 $this->error($exception->getMessage());
                 $this->error($exception->getTraceAsString());
                 continue;
             }
 
-            $this->userStravaService->update($user, [
+            $this->userStravaService->update($userStrava, [
                 'last_fetch_at' => Carbon::now()->toDateTimeString()
             ]);
 
@@ -94,46 +96,13 @@ class CollectStravaActivitiesCommand extends Command
                 continue;
             }
 
-            foreach ($allActivities as $activit) {
-
-                $activitDate = Carbon::parse($activit->start_date_local,
-                    $activit->timezone);
-
-                $data = [
-                    'id'               => $activit->id,
-                    'user_strava_id'   => $user->id,
-                    'active'           => true,
-                    'name'             => $activit->name,
-                    'type'             => $activit->type,
-                    'start_date_local' => $activitDate->format('Y-m-d H:i:s'),
-                    'elapsed_time'     => $activit->elapsed_time,
-                ];
-
-                try {
-                    $activitModel = $this->userStravaActivitService->get($activit->id);
-                    $this->userStravaActivitService->update($activitModel, $data);
-                } catch (\Exception $exception) {
-                    $this->userStravaActivitService->create($data);
-                }
-
-                $event = $activitDate->format('Ym') == '202401' ? ' Campanha Janeiro Branco' : '';
-                $value = $activitDate->format('Ym') == '202401' ? 2 : 1;
-
-                try {
-                    $point = $this->userPointBadgeService->findBadgeTypeDate($user->user_id, BadgeTypeEnum::WELL_BEING,
-                        $activitDate->format('Y-m-d'));
-                } catch (\Exception $exception) {
-                    $this->userPointBadgeService->create([
-                        'user_id'                    => $user->user_id,
-                        'badge_type_id'              => BadgeTypeEnum::WELL_BEING,
-                        'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
-                        'input_user_id'              => $user->user_id,
-                        'value'                      => $value,
-                        'description'                => 'Atividade Strava'.$event,
-                        'event_date'                 => $activitDate->format('Y-m-d 00:00:00')
-                    ]);
-                }
+            foreach ($allActivities as $activity) {
+                DB::beginTransaction();
+                $this->userStravaActivitService->createActivity($userStrava, $activity);
+                $this->userPointBadgeService->createWellBeingPoint($userStrava, $activity);
+                DB::commit();
             }
+
         }
     }
 }

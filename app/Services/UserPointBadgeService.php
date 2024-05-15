@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Enuns\BadgeTypeEnum;
+use App\Enuns\UserPointBadgeStatusEnum;
 use App\Models\UserPointBadge;
+use App\Models\UserStrava;
 use App\Repositories\UserPointBadgeRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -86,5 +89,29 @@ class UserPointBadgeService
     public function listUserPointsBadgesReset(int $year)
     {
         return $this->userPointBadgeRepository->listUserPointsBadgesReset($year);
+    }
+
+    public function createWellBeingPoint(UserStrava $userStrava, object $activity)
+    {
+        $activityDate = Carbon::parse($activity->start_date_local,
+            $activity->timezone);
+
+        $event = $activityDate->format('Ym') == '202401' ? ' Campanha Janeiro Branco' : '';
+        $value = $activityDate->format('Ym') == '202401' ? 2 : 1;
+
+        try {
+            $point = $this->findBadgeTypeDate($userStrava->user_id, BadgeTypeEnum::WELL_BEING,
+                $activityDate->format('Y-m-d'));
+        } catch (\Exception $exception) {
+            $this->create([
+                'user_id'                    => $userStrava->user_id,
+                'badge_type_id'              => BadgeTypeEnum::WELL_BEING,
+                'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
+                'input_user_id'              => $userStrava->user_id,
+                'value'                      => $value,
+                'description'                => 'Atividade Strava'.$event,
+                'event_date'                 => $activityDate->format('Y-m-d 00:00:00')
+            ]);
+        }
     }
 }

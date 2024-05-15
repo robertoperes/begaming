@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->command(RefeshStravaTokenCommand::class)->cron('*/5 * * * *')
+        $schedule->command(RefeshStravaTokenCommand::class)->cron('* * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
         $schedule->command(CacheDashboardCommand::class)->cron('55 * * * *')
@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(CollectStravaActivitiesCommand::class)
             ->timezone('America/Campo_Grande')
-            ->cron('0 9,16,23 * * *')
+            ->cron('0 0 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
         $schedule->command(CompanyTimePointCommand::class)->cron('0 5 * * *')
