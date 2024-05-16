@@ -37,7 +37,7 @@
                      :key="user.id"
                      v-if="showUser(index, user.id) && (team === '' || team === user.team_name)">
                   <div  class="col-1 p-0 text-center">
-                    <i :class="'bi bi-caret-' + user.status + '-fill'"></i>
+                    <img width="10" :src="'/images/icons/arrow-' + user.status +  '.gif'" />
                   </div>
                   <div class="col-2 p-0 text-center">
                     <strong>#{{ index + 1 }}</strong>
@@ -176,9 +176,11 @@ select {
 
 .bi-caret-up-fill {
   color: #7fb707;
+  size: 12px;
 }
 
 .bi-caret-down-fill {
   color: #f23737;
+  size: 12px;
 }
 </style>

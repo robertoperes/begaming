@@ -1,6 +1,6 @@
 <template>
   <span class="align-middle">
-    <img :src="src" :width="width" :height="height" class="rounded-circle border border-success" alt=""/>
+    <img :src="src" :width="width" :height="height" class="rounded-circle border border-success me" alt=""/>
   </span>
 </template>
 <script>
@@ -22,8 +22,8 @@ export default {
 }
 </script>
 
-<style>
- img {
+<style lang="scss" scoped>
+ img.me {
    min-height: 30px;
    min-width: 30px;
  }
