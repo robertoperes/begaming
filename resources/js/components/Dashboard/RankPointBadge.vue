@@ -37,7 +37,7 @@
                      :key="user.id"
                      v-if="showUser(index, user.id) && (team === '' || team === user.team_name)">
                   <div  class="col-1 p-0 text-center">
-                    <img width="10" :src="'/images/icons/arrow-' + user.status +  '.gif'" />
+                    <img v-if="user.status" width="10" :src="'/images/icons/arrow-' + user.status +  '.gif'" />
                   </div>
                   <div class="col-2 p-0 text-center">
                     <strong>#{{ index + 1 }}</strong>

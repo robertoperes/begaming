@@ -12,7 +12,7 @@
                  :title=" point.description ">
               <div>
                 <span class="vertical-timeline-element-icon bounce-in">
-                  <img :src="point.type.icon" height="5" width="5" alt="Icone Tipo do Badge"/>
+                  <img :src="point.type.icon" height="30" width="30" alt="Icone Tipo do Badge"/>
                 </span>
                 <div class="vertical-timeline-element-content bounce-in">
                   <h4 class="timeline-title">{{ point.type.description }}</h4>
