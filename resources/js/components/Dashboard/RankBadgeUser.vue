@@ -9,9 +9,9 @@
         <div v-for="(user, index) in this.badgeUsersRank" :key="'rank-' + index" :title="user.name"
              class="row m-2 shadow-sm">
           <div class="col-2 p-0 text-center">
-            <img v-if="(index+1) === 1" src="/images/icons/medal-1st.svg" width="5" alt=""/>
-            <img v-else-if="(index+1) === 2" src="/images/icons/medal-2nd.svg" width="5" alt=""/>
-            <img v-else-if="(index+1) === 3" src="/images/icons/medal-3rd.svg" width="5" alt=""/>
+            <img v-if="(index+1) === 1" src="/images/icons/medal-1st.svg" width="30" alt=""/>
+            <img v-else-if="(index+1) === 2" src="/images/icons/medal-2nd.svg" width="30" alt=""/>
+            <img v-else-if="(index+1) === 3" src="/images/icons/medal-3rd.svg" width="30" alt=""/>
             <span v-else style="font-size: 10px">#{{ index + 1 }}</span>
           </div>
           <div class="col-2 p-0">
