@@ -25,7 +25,7 @@ class CacheDashboardCommand extends Command
     public function handle()
     {
         $expiresAt  = Carbon::now()->addHours(24);
-        $keyCache   = 'cache-dashboard-' . Carbon::now()->format('Ymd');
+        $keyCache   = 'cache-dashboard-' . Carbon::now('America/Sao_Paulo')->format('Ymd');
         $cache      = [];
 
         try {

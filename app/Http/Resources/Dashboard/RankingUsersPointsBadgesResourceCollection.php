@@ -11,7 +11,7 @@ class RankingUsersPointsBadgesResourceCollection extends ResourceCollectionAbstr
 
     public function toArray($request)
     {
-        $key        = 'cache-dashboard-' . Carbon::now()->startOfDay()->subDay()->format('Ymd');
+        $key        = 'cache-dashboard-' . Carbon::now('America/Sao_Paulo')->subDay()->format('Ymd');
         $data       = [];
         $cacheData  = json_decode(Cache::get($key, '{}'), true);
 
