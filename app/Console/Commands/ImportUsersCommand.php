@@ -2,18 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Enuns\BadgeTypeEnum;
-use App\Enuns\UserPointBadgeStatusEnum;
 use App\Services\TeamService;
-use App\Services\UserBadgeService;
-use App\Services\UserPointBadgeHistoryService;
-use App\Services\UserPointBadgeService;
 use App\Services\UserService;
 use Carbon\Carbon;
-use Carbon\Traits\Boundaries;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -65,6 +58,10 @@ class ImportUsersCommand extends Command
             $userIds = [];
 
             foreach ($users as $user){
+
+                if(str_contains($user['name'], 'teste')) {
+                    continue;
+                }
 
                 try {
                     $team = $this->teamService->findBy(['name' => $user['time']]);
