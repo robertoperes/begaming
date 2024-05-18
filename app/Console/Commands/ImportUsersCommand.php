@@ -59,7 +59,7 @@ class ImportUsersCommand extends Command
 
             foreach ($users as $user){
 
-                if(str_contains($user['name'], 'teste')) {
+                if(str_contains($user['nome'], 'teste')) {
                     continue;
                 }
 

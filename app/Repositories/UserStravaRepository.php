@@ -28,7 +28,7 @@ class UserStravaRepository extends RepositoryAbstract
             ->where('user.active', '=', true)
             ->where('user_strava.active', '=', true)
             ->where('user_strava.expires_at', '<=',
-                Carbon::now('UTC')->addMinute()->toDateTimeString())
+                Carbon::now('UTC')->toDateTimeString())
             ->orderBy('user_strava.expires_at')
             ->groupBy('user_strava.user_id');
     }
