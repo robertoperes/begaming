@@ -72,9 +72,15 @@ class CollectStravaActivitiesCommand extends Command
                 } while ($total === $perPage);
 
             } catch (ClientException $exception) {
-                if($exception->getResponse()->getStatusCode() == 429) {
+                if ($exception->getResponse()->getStatusCode() == 429) {
                     $this->warn('Too Many Requests');
                     break;
+                } elseif($exception->getResponse()->getStatusCode() == 401) {
+                    $this->warn('Conexão com strava expirada para usuário '.$userStrava->user->name);
+                    $this->userStravaService->update($userStrava, [
+                        'active' => false
+                    ]);
+                    continue;
                 } else {
                     $this->error($exception->getMessage());
                     $this->error($exception->getTraceAsString());

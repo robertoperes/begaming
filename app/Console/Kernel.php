@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->command(RefeshStravaTokenCommand::class)->cron('* * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
-        $schedule->command(CacheDashboardCommand::class)->cron('55 * * * *')
+        $schedule->command(CacheDashboardCommand::class)->cron('0 * * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
         $schedule->command(CollectStravaActivitiesCommand::class)
