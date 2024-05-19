@@ -3,9 +3,11 @@
     <th scope="row" class="align-middle">{{ item.id }}</th>
     <td class="text-center align-middle"><i :class="this.iconClass"></i></td>
     <td class="text-left align-middle">{{ item.name }}</td>
-    <td class="text-center align-middle"><img :src="item.icon" class="img-thumbnail" height="5" width="5" alt="Icone Badge"/></td>
+    <td class="text-center align-middle">
+      <img :src="item.icon" class="img-thumbnail" height="30" width="30" alt="Icone Badge"/>
+    </td>
     <td class="text-left align-middle"><span>
-      <img :src="item.type.icon" class="img-thumbnail" height="5" width="5"
+      <img :src="item.type.icon" class="img-thumbnail" height="30" width="30"
            alt="Icone Tipo do Badge"/> {{ item.type.description }}
     </span></td>
     <td class="text-left align-middle">
@@ -13,7 +15,9 @@
     </td>
     <td class="text-center align-middle">{{ item.value }}</td>
     <td class="text-center align-middle">
-      <button class="btn btn-sm" title="Editar" @click="edit(item.id)"><i class="icon bi-pencil-square"/></button>
+      <button class="btn btn-sm" title="Editar" @click="edit(item.id)">
+        <i class="icon bi-pencil-square"/>
+      </button>
     </td>
   </tr>
 </template>

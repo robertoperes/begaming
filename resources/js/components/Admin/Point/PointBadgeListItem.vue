@@ -3,7 +3,7 @@
     <th scope="row" class="align-middle">{{ item.id }}</th>
     <td class="text-left align-middle">{{ item.user.name }}</td>
     <td class="text-left align-middle"><span>
-      <img :src="item.type.icon" class="img-thumbnail" height="5" width="5"
+      <img :src="item.type.icon" class="img-thumbnail" height="30" width="30"
            alt="Icone Tipo do Badge"/> {{ item.type.description }}
     </span></td>
     <td class="text-center align-middle">{{ formatDate(item.event_date) }}</td>
