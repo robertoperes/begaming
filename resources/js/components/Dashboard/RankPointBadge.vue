@@ -32,18 +32,18 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-12">
-                <div :class="'row user-ranking ' + (me(user.id) && 'me')" v-for="(user, index) in badge.users"
+              <div class="col-12 row-user-ranking">
+                <div :class="'row ' + (me(user.id) && 'me') + ' row-color-'+user.status" v-for="(user, index) in badge.users"
                      :key="user.id"
                      v-if="showUser(index, user.id) && (team === '' || team === user.team_name)">
-                  <div  class="col-1 p-0 text-center">
-                    <img v-if="user.status" width="10" :src="'/images/icons/arrow-' + user.status +  '.gif'" />
+                  <div class="col-1 p-0 user-status">
+                    <i :class="'bi bi-arrow-' +user.status+ '-circle'"></i>
                   </div>
-                  <div class="col-2 p-0 text-center">
-                    <strong>#{{ index + 1 }}</strong>
+                  <div class="col-2 p-0 user-ranking">
+                    <strong class="text-center">#{{ index + 1 }}</strong>
                   </div>
-                  <div class="col-7 p-0" :title="user.name + ' (' + user.team_name + ')'">{{ firstName(user.name) }}</div>
-                  <div class="col-2 p-0 text-center">{{ user.total }}</div>
+                  <div class="col-7 p-0 user-name" :title="user.name + ' (' + user.team_name + ')'">{{ firstName(user.name) }}</div>
+                  <div class="col-2 p-0 user-total">{{ user.total }}</div>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@ div.me {
   font-weight: bold;
 }
 
-div.user-ranking {
+div.row-user-ranking {
   font-size: 12px;
 }
 
@@ -174,13 +174,15 @@ select {
   font-size: 10px;
 }
 
-.bi-caret-up-fill {
-  color: #7fb707;
-  size: 12px;
+div.user-ranking, div.user-status, div.user-total {
+  text-align: center;
 }
 
-.bi-caret-down-fill {
-  color: #f23737;
-  size: 12px;
+.bi-arrow-up-circle, .row-color-up {
+  color: #2caa25 !important;
+}
+
+.bi-arrow-down-circle, .row-color-down {
+  color: #d12323 !important;
 }
 </style>
