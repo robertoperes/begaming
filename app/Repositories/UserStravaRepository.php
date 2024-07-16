@@ -26,6 +26,7 @@ class UserStravaRepository extends RepositoryAbstract
         return $this->createModel()->select(['user_strava.*'])
             ->join('user', 'user.id', '=', 'user_strava.user_id')
             ->where('user.active', '=', true)
+            ->where('user_strava.active', '=', true)
             ->where('user_strava.expires_at', '<=',
                 Carbon::now('UTC')->toDateTimeString())
             ->orderBy('user_strava.expires_at')
