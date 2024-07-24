@@ -38,7 +38,7 @@ class CollectStravaActivitiesCommand extends Command
     public function handle()
     {
 
-        $timeStampStart = Carbon::now('UTC')->setDay(1)->setMonth(1)->startOfDay();
+        $timeStampStart = Carbon::now('UTC')->subDays(7);
         $users = $this->userStravaService->getActiveUsers();
         $now   = Carbon::now('UTC');
         $perPage = 100;

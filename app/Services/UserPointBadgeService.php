@@ -96,8 +96,15 @@ class UserPointBadgeService
         $activityDate = Carbon::parse($activity->start_date_local,
             $activity->timezone);
 
+        $timeStampStart = Carbon::now('UTC')->subDays(7);
+
         $event = $activityDate->format('Ym') == '202401' ? ' Campanha Janeiro Branco' : '';
         $value = $activityDate->format('Ym') == '202401' ? 2 : 1;
+
+        $status = UserPointBadgeStatusEnum::APPROVED;
+        if($activityDate->timestamp < $timeStampStart->timestamp) {
+            $status = UserPointBadgeStatusEnum::DISABLED;
+        }
 
         try {
             $point = $this->findBadgeTypeDate($userStrava->user_id, BadgeTypeEnum::WELL_BEING,
@@ -106,7 +113,7 @@ class UserPointBadgeService
             $this->create([
                 'user_id'                    => $userStrava->user_id,
                 'badge_type_id'              => BadgeTypeEnum::WELL_BEING,
-                'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
+                'user_point_badge_status_id' => $status,
                 'input_user_id'              => $userStrava->user_id,
                 'value'                      => $value,
                 'description'                => 'Atividade Strava'.$event,

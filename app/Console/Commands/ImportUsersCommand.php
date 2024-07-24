@@ -77,7 +77,6 @@ class ImportUsersCommand extends Command
                     $localUser = $this->userService->findUserBy(['email' => $user['email']]);
                     $this->userService->update($localUser, [
                         'name'              => $user['nome'],
-                        'admission_date'    => $user['data_adm'],
                         'team_id'           => $team->id,
                         'city_name'         => $user['cidade'],
                         'state_letter'      => $user['uf'],
