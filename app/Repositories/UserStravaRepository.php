@@ -18,7 +18,8 @@ class UserStravaRepository extends RepositoryAbstract
             'user_strava.*'
         ])->join('user', 'user.id', '=', 'user_strava.user_id')
             ->where('user_strava.active', '=', true)
-            ->where('user.active', '=', true);
+            ->where('user.active', '=', true)
+            ->groupBy('user.id');
     }
 
     public function getExpiredUsers()

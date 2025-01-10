@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\DB;
 class CulturePointCommand extends Command
 {
 
-    protected $signature   = 'culture_point';
+    protected $signature = 'culture_point';
     protected $description = 'Gera os pontos de Cultura';
 
     protected $pointBadgeWeight = [
         BadgeClassificationEnum::CLASSIC => 1,
-        BadgeClassificationEnum::SILVER  => 2,
-        BadgeClassificationEnum::GOLD    => 3,
-        BadgeClassificationEnum::BLACK   => 4,
+        BadgeClassificationEnum::SILVER => 2,
+        BadgeClassificationEnum::GOLD => 3,
+        BadgeClassificationEnum::BLACK => 4,
     ];
 
     /* @var UserService */
@@ -36,8 +36,8 @@ class CulturePointCommand extends Command
 
     public function __construct()
     {
-        $this->userService           = app(UserService::class);
-        $this->userBadgeService      = app(UserBadgeService::class);
+        $this->userService = app(UserService::class);
+        $this->userBadgeService = app(UserBadgeService::class);
         $this->userPointBadgeService = app(UserPointBadgeService::class);
         parent::__construct();
     }
@@ -45,7 +45,7 @@ class CulturePointCommand extends Command
     public function handle()
     {
 
-        $now   = Carbon::now('UTC');
+        $now = Carbon::now('UTC');
         $total = 0;
 
         $users = $this->userService->findAll(['active' => true]);
@@ -58,16 +58,14 @@ class CulturePointCommand extends Command
 
             try {
 
-                DB::beginTransaction();
-
                 $userBadges = $this->userBadgeService->findAll([
                     'user_id' => $user->id
                 ]);
 
                 $points = $this->userPointBadgeService->findAll([
-                    'user_id'                    => $user->id,
+                    'user_id' => $user->id,
                     'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
-                    'badge_type_id'              => BadgeTypeEnum::CULTURE,
+                    'badge_type_id' => BadgeTypeEnum::CULTURE,
                 ]);
 
                 if (!count($userBadges)) {
@@ -75,51 +73,56 @@ class CulturePointCommand extends Command
                 }
 
                 $listUniqueBadges = [];
-                $pointValues      = [];
+                $pointValues = 0;
+                $sum = 0;
 
                 foreach ($userBadges as $userBadge) {
-                    $key = $userBadge->badge->type->id . '-' . $userBadge->badge->classification->id;
+                    $typeId = $userBadge->badge->type->id;
+                    $classificationId = $userBadge->badge->classification->id;
 
-                    if( $userBadge->badge->type->id == BadgeTypeEnum::CULTURE){
+                    if ($typeId == BadgeTypeEnum::CULTURE) {
                         continue;
                     }
 
-                    if (array_key_exists($key, $listUniqueBadges)) {
-                        continue;
+                    if (!array_key_exists($typeId, $listUniqueBadges) ||
+                        $listUniqueBadges[$typeId] < $classificationId
+                    ) {
+                        $listUniqueBadges[$typeId] = $classificationId;
                     }
+                }
 
-                    $listUniqueBadges[$key] =
-                        $this->pointBadgeWeight[$userBadge->badge->classification->id];
+                foreach ($listUniqueBadges as $classificationId) {
+                    $sum += $this->pointBadgeWeight[$classificationId];
                 }
 
                 foreach ($points as $point) {
-                    $pointValues[$point->id] = $point->value;
+                    $pointValues += $point->value;
                 }
 
-                foreach ($listUniqueBadges as $type_id => $value) {
-                    if ($key = array_search(intval($value), $pointValues)) {
-                        unset($pointValues[$key]);
-                        continue;
-                    }
+                $value = $sum - $pointValues;
 
-                    $this->info('Criando ponto de cultura ' . $value . ' para ' . $user->name);
-                    $this->userPointBadgeService->create([
-                        'user_id'                    => $user->id,
-                        'badge_type_id'              => BadgeTypeEnum::CULTURE,
-                        'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
-                        'input_user_id'              => $user->id,
-                        'event_date'                 => $now->format('Y-m-d'),
-                        'description'                => 'Novo badge diferente adquirido',
-                        'value'                      => $value,
-                    ]);
-                    $total++;
+                if ($value < 1) {
+                    continue;
                 }
-                DB::commit();
+
+                $this->info('Criando ponto de cultura ' . $value . ' para ' . $user->name);
+                $this->userPointBadgeService->create([
+                    'user_id' => $user->id,
+                    'badge_type_id' => BadgeTypeEnum::CULTURE,
+                    'user_point_badge_status_id' => UserPointBadgeStatusEnum::APPROVED,
+                    'input_user_id' => $user->id,
+                    'event_date' => $now->format('Y-m-d'),
+                    'description' => 'Pontos de cultura',
+                    'value' => $value,
+                ]);
+                $total++;
+
             } catch (\Exception $exception) {
                 $this->error($exception->getMessage());
                 $this->error($exception->getTraceAsString());
             }
         }
+
         $this->info('Inserido total de ' . $total . ' pontos de cultura.');
     }
 }
