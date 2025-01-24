@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <tr>
-          <td><img src="/images/badges/type/bem-estar-classic.png" width="10"> Bem estar</td>
+          <td><img src="/images/badges/type/bem-estar-classic.png" width="20"> Bem estar</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">180</td>
           <td class="text-center">280</td>
@@ -41,7 +41,7 @@
           <td class="text-center">480</td>
         </tr>
         <tr>
-          <td><img src="/images/badges/type/cursos-palestras-classic.png" width="10"> Evolução</td>
+          <td><img src="/images/badges/type/cursos-palestras-classic.png" width="20"> Evolução</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">180</td>
           <td class="text-center">300</td>
@@ -49,7 +49,7 @@
           <td class="text-center">540</td>
         </tr>
         <tr>
-          <td><img src="/images/badges/type/tempo-empresa-classic.png" width="10"> Tempo de empresa</td>
+          <td><img src="/images/badges/type/tempo-empresa-classic.png" width="20"> Tempo de empresa</td>
           <td class="text-center">Anos</td>
           <td class="text-center">4</td>
           <td class="text-center">8</td>
@@ -57,7 +57,7 @@
           <td class="text-center">16</td>
         </tr>
         <tr>
-          <td><img src="/images/badges/type/admiracao-classic.png" width="10"> Admiração</td>
+          <td><img src="/images/badges/type/admiracao-classic.png" width="20"> Admiração</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">2</td>
           <td class="text-center">4</td>
@@ -65,7 +65,7 @@
           <td class="text-center">8</td>
         </tr>
         <tr>
-          <td><img src="/images/badges/type/cultura-classic.png" width="10"> Cultura</td>
+          <td><img src="/images/badges/type/cultura-classic.png" width="20"> Cultura</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">4</td>
           <td class="text-center">8</td>
@@ -73,7 +73,7 @@
           <td class="text-center">16</td>
         </tr>
         <tr>
-          <td><img src="/images/badges/type/engajamento-classic.png" width="10"> Engajamento</td>
+          <td><img src="/images/badges/type/engajamento-classic.png" width="20"> Engajamento</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">240</td>
           <td class="text-center">280</td>
