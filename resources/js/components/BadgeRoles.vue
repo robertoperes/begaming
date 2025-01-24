@@ -18,7 +18,7 @@
       </p>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
-          <caption>* Anual (Zera na passagem de nível exceto Cultura e Tempo de Empresa)</caption>
+          <caption>* Anual (Zera na passagem de nível exceto Admiração, Cultura e Tempo de Empresa)</caption>
         <thead>
         <tr>
           <th>
@@ -44,9 +44,9 @@
           <td><img src="/images/badges/type/cursos-palestras-classic.png" width="10"> Evolução</td>
           <td class="text-center">Pontos</td>
           <td class="text-center">180</td>
-          <td class="text-center">350</td>
-          <td class="text-center">520</td>
-          <td class="text-center">600</td>
+          <td class="text-center">300</td>
+          <td class="text-center">420</td>
+          <td class="text-center">540</td>
         </tr>
         <tr>
           <td><img src="/images/badges/type/tempo-empresa-classic.png" width="10"> Tempo de empresa</td>
@@ -59,10 +59,10 @@
         <tr>
           <td><img src="/images/badges/type/admiracao-classic.png" width="10"> Admiração</td>
           <td class="text-center">Pontos</td>
+          <td class="text-center">2</td>
           <td class="text-center">4</td>
           <td class="text-center">6</td>
           <td class="text-center">8</td>
-          <td class="text-center">10</td>
         </tr>
         <tr>
           <td><img src="/images/badges/type/cultura-classic.png" width="10"> Cultura</td>
@@ -75,10 +75,10 @@
         <tr>
           <td><img src="/images/badges/type/engajamento-classic.png" width="10"> Engajamento</td>
           <td class="text-center">Pontos</td>
-          <td class="text-center">260</td>
+          <td class="text-center">240</td>
+          <td class="text-center">280</td>
           <td class="text-center">320</td>
-          <td class="text-center">380</td>
-          <td class="text-center">450</td>
+          <td class="text-center">360</td>
         </tr>
         </tbody>
       </table>
@@ -138,12 +138,12 @@ export default {
             },
             {
               description: 'Curso graduação ou pós-graduação',
-              point: 0.05,
+              point: 0.15,
               observation: 'Por hora de curso comprovado'
             },
             {
               description: 'Palestrar em evento interno ou externo',
-              point: 1,
+              point: 10,
               observation: 'Por comprovação enviada para o e-mail do RH'
             },
             {
@@ -285,12 +285,12 @@ export default {
             },
             {
               description: 'Indicar profissionais para as vagas abertas (ser contratado)',
-              point: 10,
+              point: 20,
               observation: 'Indicação válida somente de currículos encaminhados diretamente para o RH'
             },
             {
               description: 'Participação em eventos internos',
-              point: 1,
+              point: 2,
               observation: 'Precisa responder o formulário de satisfação do evento na Feedz para pontuar'
             },
             {
