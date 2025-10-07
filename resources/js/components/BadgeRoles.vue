@@ -270,7 +270,7 @@ export default {
         {
           icon:'engajamento-classic.png',
           title: 'Engajamento',
-          description: 'Este badge valoriza o seu envolvimento com a Before. Quanto mais você contribui se envolvendo nas ações da empresa e nos processos de engajamento da Feedz, mais pontos você ganha.',
+          description: 'Este badge valoriza o seu envolvimento com a Before. Quanto mais você contribui se envolvendo nas ações da empresa e nos processos de engajamento da Feedz, mais pontos você ganha. A pontuação para o atingimento do badge deve estar distribuída entre as diferentes formas de pontuação apresentadas neste quadro, não sendo permitido atingir 100% da pontuação apenas por um único critério.',
           roles: [],
           points: [
             {
