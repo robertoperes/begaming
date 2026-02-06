@@ -82,7 +82,7 @@ class StravaController extends Controller
     public function subscribeCallback(Request $request): JsonResponse
     {
         $data = [
-            'hub.challenge' => $request['hub_challenge'] ?? null,
+            'hub.challenge' => $request['hub.challenge'] ?? null,
         ];
         return Response::json($data, HttpResponse::HTTP_OK);
     }
