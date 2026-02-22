@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command(CollectStravaActivitiesCommand::class)
             ->timezone('America/Campo_Grande')
-            ->cron('0 0 * * *')
+            ->cron('0 10,14,18,23 * * *')
             ->appendOutputTo(storage_path() . '/logs/schedule.log');
 
         $schedule->command(CompanyTimePointCommand::class)->cron('0 5 * * *')
