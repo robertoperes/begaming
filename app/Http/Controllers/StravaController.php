@@ -80,15 +80,15 @@ class StravaController extends Controller
 
     public function subscribeCallback(Request $request)
     {
-        $mode = $request->input('hub.mode');
-        $token = $request->input('hub.verify_token');
-        $challenge = $request->input('hub.challenge');
+        $mode       = $request->get('hub.mode');
+        $token      = $request->get('hub.verify_token');
+        $challenge  = $request->get('hub.challenge');
 
         if ($mode === 'subscribe' && $token === 'STRAVA_BEFORE') {
             return response()->json(['hub.challenge' => $challenge], HttpResponse::HTTP_OK);
-        } else {
-            return response('Forbidden', HttpResponse::HTTP_FORBIDDEN);
         }
+
+        return response('Forbidden', HttpResponse::HTTP_FORBIDDEN);
     }
 
     public function inputSubscribeCallback(Request $request): JsonResponse
