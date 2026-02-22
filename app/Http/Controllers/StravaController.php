@@ -9,7 +9,6 @@ use App\Services\UserStravaService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 use Strava;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -79,12 +78,17 @@ class StravaController extends Controller
         return redirect()->route('home');
     }
 
-    public function subscribeCallback(Request $request): JsonResponse
+    public function subscribeCallback(Request $request)
     {
-        $data = [
-            'hub.challenge' => $request['hub.challenge'] ?? null,
-        ];
-        return Response::json($data, HttpResponse::HTTP_OK);
+        $mode = $request->input('hub.mode');
+        $token = $request->input('hub.verify_token');
+        $challenge = $request->input('hub.challenge');
+
+        if ($mode === 'subscribe' && $token === 'STRAVA_BEFORE') {
+            return response()->json(['hub.challenge' => $challenge], HttpResponse::HTTP_OK);
+        } else {
+            return response('Forbidden', HttpResponse::HTTP_FORBIDDEN);
+        }
     }
 
     public function inputSubscribeCallback(Request $request): JsonResponse
