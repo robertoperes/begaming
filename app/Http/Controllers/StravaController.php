@@ -106,12 +106,12 @@ class StravaController extends Controller
             }
         } catch (\Exception $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
-            return Response::json([
+            return response()->json([
                 'message' => 'Falha atualização atividade do usuário',
             ], HttpResponse::HTTP_INTERNAL_SERVER_ERROR);
 
         }
-        return Response::json([], HttpResponse::HTTP_OK);
+        return response()->json([], HttpResponse::HTTP_OK);
     }
 
 }

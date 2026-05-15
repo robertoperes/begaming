@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/google-redirect', 'Auth\LoginController@redirectToGoogleProvider')
     ->name('login-google');
 Route::get('/google-callback', 'Auth\LoginController@handleGoogleProviderCallback')
-    ->name('app-strava');
+    ->name('google-callback');
 Route::get('/strava-redirect', 'StravaController@redirectToStravaProvider')
     ->name('app-strava');
 Route::get('/strava-callback', 'StravaController@providerCallback')
