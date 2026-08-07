@@ -46,12 +46,38 @@ class StravaController extends Controller
 
     public function providerCallback(Request $request)
     {
+        if ($request->filled('error')) {
+            Log::warning('Strava OAuth negado ou cancelado pelo usuário', [
+                'error' => $request->get('error'),
+                'user_id' => optional(auth()->user())->id,
+            ]);
+            return redirect()->route('home')->with('error', 'Autorização do Strava não concedida.');
+        }
 
-        $token   = Strava::token($request->code);
-        $athlete = Strava::athlete($token->access_token);
+        if (!$request->filled('code')) {
+            Log::warning('Strava callback chamado sem "code"', $request->all());
+            return redirect()->route('home')->with('error', 'Retorno inválido do Strava.');
+        }
+
+        $user = auth()->user();
+        if (!$user) {
+            Log::warning('Strava callback chamado sem usuário autenticado (sessão perdida no redirect)');
+            return redirect()->route('login')->with('error', 'Sua sessão expirou, faça login novamente para conectar o Strava.');
+        }
 
         try {
-            $userStrava = $this->userStravaService->findByUser(auth()->user()->id);
+            $token   = Strava::token($request->code);
+            $athlete = Strava::athlete($token->access_token);
+        } catch (\Exception $e) {
+            Log::error('Falha ao trocar code por token / buscar athlete no Strava: ' . $e->getMessage(), [
+                'exception' => $e,
+                'user_id'   => $user->id,
+            ]);
+            return redirect()->route('home')->with('error', 'Não foi possível conectar ao Strava. Tente novamente.');
+        }
+
+        try {
+            $userStrava = $this->userStravaService->findByUser($user->id);
             $this->userStravaService->update(
                 $userStrava,
                 [
@@ -65,7 +91,7 @@ class StravaController extends Controller
         } catch (\Exception $e) {
             $this->userStravaService->create(
                 [
-                    'user_id'       => auth()->user()->id,
+                    'user_id'       => $user->id,
                     'athlete_id'    => $athlete->id,
                     'access_token'  => $token->access_token,
                     'refresh_token' => $token->refresh_token,

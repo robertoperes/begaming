@@ -19,8 +19,10 @@ Route::get('/google-redirect', 'Auth\LoginController@redirectToGoogleProvider')
 Route::get('/google-callback', 'Auth\LoginController@handleGoogleProviderCallback')
     ->name('google-callback');
 Route::get('/strava-redirect', 'StravaController@redirectToStravaProvider')
+    ->middleware('auth')
     ->name('app-strava');
 Route::get('/strava-callback', 'StravaController@providerCallback')
+    ->middleware('auth')
     ->name('app-strava-callback');
 Route::get('/strava-subscribe-callback', 'StravaController@subscribeCallback')
     ->name('app-strava-subscribe-callback');
